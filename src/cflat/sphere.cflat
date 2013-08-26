@@ -1,0 +1,39 @@
+double pi; double mill;
+
+double surface (double r){
+    double four;
+    four = 4;
+    return four*pi*r*r;
+
+}
+
+double volume (double r){
+  double fourZero; double threeZero; double ten;
+  ten = 10;
+  fourZero = 40; threeZero = 30;
+  fourZero = fourZero / ten;
+  threeZero = threeZero/ten;
+  return fourZero/threeZero*pi*r*r*r;
+}
+
+
+
+int main()
+{
+ double r; double surfaceRes; double volumeRes;
+ pi = 3141593;
+ mill = 1000000;
+ pi = pi/mill;
+ 
+  
+ putchar('r'); putchar('?');
+ r = getdouble();
+ putchar('S'); putchar(':'); putchar(32);
+ surfaceRes = surface(r); volumeRes = volume(r);
+ putdouble(surfaceRes); putchar(32);
+ putchar('V'); putchar(':'); putchar(32); putdouble(volumeRes);
+ putchar(10); 
+
+}
+
+
