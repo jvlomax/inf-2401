@@ -41,8 +41,11 @@ public class CharGenerator {
     }
 	
     public static boolean isMoreToRead() {
-		return (sourceLine != null ? true : false);
-	
+		if(sourceLine == null){
+			System.out.print("no more to read");
+			return false;
+		}
+		return true;
     }
 	
     public static int curLineNum() {
@@ -51,9 +54,12 @@ public class CharGenerator {
     }
 
     
-    public static String readLine(){
+    public static String readNextLine(){
     	try{
-			return sourceFile.readLine();
+			sourceLine = sourceFile.readLine();
+			curC = 'm';
+    		System.out.print("new line: " + sourceLine +  "\n");
+			return sourceLine;
 		}catch (IOException e){
 			Error.error("could not read line");
 			return null;
@@ -64,7 +70,7 @@ public class CharGenerator {
 	if (! isMoreToRead()) return;
 	try{
 		nextC = (char) sourceFile.read();
-		
+		System.out.print("current c: " + curC);
 	}catch (IOException e){
 		Error.error("Could not read character");
 		e.printStackTrace();

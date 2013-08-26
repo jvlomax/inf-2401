@@ -84,7 +84,7 @@ public class Cflat {
 		if (testScanner) {
 		    System.out.print("Scanning...");
 		    while (Scanner.nextNextToken != eofToken) 
-			Scanner.readNext();
+		    	Scanner.readNext();
 		} else {
 		    	System.out.print("Parsing...");  Syntax.parseProgram();
 		    if (Log.doLogTree) {
