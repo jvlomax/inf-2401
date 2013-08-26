@@ -4,11 +4,13 @@ package no.uio.ifi.cflat.chargenerator;
  * module CharGenerator
  */
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.LineNumberReader;
 
 import no.uio.ifi.cflat.cflat.Cflat;
 import no.uio.ifi.cflat.error.Error;
-import no.uio.ifi.cflat.log.Log;
 
 /*
  * Module for reading single characters.
@@ -47,7 +49,16 @@ public class CharGenerator {
     	
     	return (sourceFile == null ? 0 : sourceFile.getLineNumber());
     }
-	
+
+    
+    public static String readLine(){
+    	try{
+			return sourceFile.readLine();
+		}catch (IOException e){
+			Error.error("could not read line");
+			return null;
+		}
+    }
     public static void readNext() {
 	curC = nextC;
 	if (! isMoreToRead()) return;
