@@ -42,17 +42,31 @@ public class Scanner {
 	    } else 
 	    //-- Must be changed in part 0:
 	    {
-		Error.error(nextNextLine,
-			    "Illegal symbol: '" + CharGenerator.curC + "'!");
+//		Error.error(nextNextLine,
+//			    "Illegal symbol: '" + CharGenerator.curC + "'!");
+	    	if(CharGenerator.curC == '#'){
+	    		String line = CharGenerator.readNextLine();
+	    		
+	    		Log.noteSourceLine(curLine, line);
+	    		nextLine ++;
+	    		
+	    	}else{
+	    		String word = "";
+	    		while(CharGenerator.curC != ' '){
+	    			CharGenerator.readNext();
+	    			word = word + CharGenerator.curC;
+	    		}
+	    		//CharGenerator.readNextLine();
+	    		System.out.print("word: " + word);
+	    	}
 	    }
 	}
 	Log.noteToken();
     }
 	
     private static boolean isLetterAZ(char c) {
-		if(Character.isLetter(c))
-			return true;
-    	return false;
+		return Character.isLetter(c);
+			
     }
 	
     public static void check(Token t) {
