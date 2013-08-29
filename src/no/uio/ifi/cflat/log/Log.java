@@ -83,7 +83,8 @@ public class Log {
     public static void noteToken() {
 	if (! doLogScanner) return;
 
-	//-- Must be changed in part 0:
+	// This is for stig
+	
     }
 
     public static void noteBinding(String name, int lineNum, int useLineNum) {

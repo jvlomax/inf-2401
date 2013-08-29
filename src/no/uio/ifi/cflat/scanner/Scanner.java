@@ -44,21 +44,66 @@ public class Scanner {
 	    {
 //		Error.error(nextNextLine,
 //			    "Illegal symbol: '" + CharGenerator.curC + "'!");
-	    	if(CharGenerator.curC == '#'){
-	    		String line = CharGenerator.readNextLine();
-	    		
-	    		Log.noteSourceLine(curLine, line);
-	    		nextLine ++;
-	    		
+	    	Token token;
+	    	if(isLetterAZ(CharGenerator.curC)){
+	    	
+	    	
 	    	}else{
-	    		String word = "";
-	    		while(CharGenerator.curC != ' '){
-	    			CharGenerator.readNext();
-	    			word = word + CharGenerator.curC;
-	    		}
-	    		//CharGenerator.readNextLine();
-	    		System.out.print("word: " + word);
-	    	}
+		    	switch(CharGenerator.curC){
+		    		case '(':
+		    			token = Token.leftParToken;
+		    			break;
+		    		case ')':
+		    			token = Token.rightParToken;
+		    			break;
+		    		case '+':
+		    			token = Token.addToken;
+		    			break;
+		    		case '-':
+		    			token = Token.subtractToken;
+		    			break;
+		    		case '*':
+		    			token = Token.multiplyToken;
+		    			break;
+		    		case '/':
+		    			token = Token.divideToken;
+		    			break;
+		    		case ']':
+		    			token = Token.rightBracketToken;
+		    			break;
+		    		case '[':
+		    			token = Token.leftBracketToken;
+		    			break;
+		    		case '{':
+		    			token = Token.leftCurlToken;
+		    			break;
+		    		case '}':
+		    			token = Token.rightCurlToken;
+		    			break;
+		    		case ',':
+		    			token = Token.commaToken;
+		    			break;
+		    		case ';':
+		    			token = Token.semicolonToken;
+		    			break;
+		    	}
+	    		
+	    		
+	    		/*
+	    		 * needs additional checking
+	    		 */
+//	    		case '<':
+//	    			token = Token.lessToken;
+//	    			break;
+//	    		case '>':
+//	    			token = Token.greaterToken;
+//		    	case '=':
+//		    		token = Token
+	    	}	
+	    		System.out.print("current C: " + CharGenerator.curC);
+	    		
+	    		readNext();
+	    		
 	    }
 	}
 	Log.noteToken();
