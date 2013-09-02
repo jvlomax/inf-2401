@@ -4,11 +4,14 @@ package no.uio.ifi.cflat.log;
  * module Log
  */
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+
 import no.uio.ifi.cflat.cflat.Cflat;
 import no.uio.ifi.cflat.error.Error;
 import no.uio.ifi.cflat.scanner.Scanner;
-import static no.uio.ifi.cflat.scanner.Token.*;
+import no.uio.ifi.cflat.scanner.Token;
 
 /*
  * Produce logging information.
@@ -70,8 +73,7 @@ public class Log {
      * @param line     The actual line
      */
     public static void noteSourceLine(int lineNum, String line) {
-	if (! doLogParser && ! doLogScanner) return;
-
+	if (! doLogParser && ! doLogScanner || line == null) return;
 		Log.writeLogLine(String.valueOf(lineNum) + ": " + line);
     }
 	
@@ -83,8 +85,10 @@ public class Log {
     public static void noteToken() {
 	if (! doLogScanner) return;
 
-	// This is for stig
-	
+		
+		if (Scanner.nextNextToken == Token.leftParToken){
+			Log.writeLogLine("Scanner: leftParToken");
+		}
     }
 
     public static void noteBinding(String name, int lineNum, int useLineNum) {

@@ -11,6 +11,7 @@ import java.io.LineNumberReader;
 
 import no.uio.ifi.cflat.cflat.Cflat;
 import no.uio.ifi.cflat.error.Error;
+import no.uio.ifi.cflat.log.Log;
 
 /*
  * Module for reading single characters.
@@ -21,7 +22,6 @@ public class CharGenerator {
     private static LineNumberReader sourceFile = null;
     private static String sourceLine;
     private static int sourcePos;
-    private static int soureLineNum; //this is added by us
 	
     public static void init() {
 	try {
@@ -29,7 +29,13 @@ public class CharGenerator {
 	} catch (FileNotFoundException e) {
 	    Error.error("Cannot read " + Cflat.sourceName + "!");
 	}
-	sourceLine = "";  sourcePos = 0;  curC = nextC = ' '; soureLineNum = 0;
+	try{
+		sourceLine = sourceFile.readLine();
+	}catch (IOException e){
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	sourcePos = 0;  curC = nextC = ' '; 
 	readNext();  readNext();
     }
 	
@@ -41,9 +47,9 @@ public class CharGenerator {
 	}
     }
 	
-    public static boolean isMoreToRead() {
-    	if(sourceLine == null){	
-			return false;
+    public static boolean isMoreToRead() throws IOException {
+    	if(sourcePos < sourceLine.length() || sourceFile.ready()){
+			return true;
 		}
 		return true;
     }
@@ -53,40 +59,51 @@ public class CharGenerator {
     	return (sourceFile == null ? 0 : sourceFile.getLineNumber());
     }
 
-    /*
-     * This is not part of the pre-code, this is "human" generated
-     */
-    public static String readNextLine(){
-    	try{
-			sourceLine = sourceFile.readLine();
-			
-			curC = 'm';
-    		System.out.print("new line: " + sourceLine +  "\n");
-			return sourceLine;
-		}catch (IOException e){
-			Error.error("could not read line");
-			return null;
-		}
-    }
     
     public static void readNext() {
 	curC = nextC;
-	if (sourceLine == "" || sourcePos == sourceLine.length()){
-		sourceLine = readNextLine();
-		sourcePos = 0;
-		System.out.print("SoureLine: " + sourceLine);
-
-	}
 	
-	if (! isMoreToRead()){ 
-		System.out.print("mordi!!!");
-		return;
-	}
-	nextC = (char) sourceLine.charAt(sourcePos);
-	sourcePos ++;
-	System.out.print("current c: " + curC);
-	
-	
-		
+	/*
+	 * Read the next line unless we are the end of it
+	 */
+		if(sourcePos < sourceLine.length()){
+			nextC = sourceLine.charAt(sourcePos);
+			sourcePos += 1;
+		}else{
+			try{
+				sourceLine = sourceFile.readLine();
+				Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
+				
+			}catch (IOException e){
+				// TODO Auto-generated catch block
+				// MONGO
+				e.printStackTrace();
+			}	
+			if (sourceLine == null){
+				nextC = '?';
+				return;
+			}
+			sourcePos = 0;
+			nextC = sourceLine.charAt(sourcePos);
+			sourcePos += 1;	
+		}
+    }
+    public static void skipLine(){
+    	
+    	Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
+    	sourcePos = 0;
+    	try{
+			sourceLine = sourceFile.readLine();
+		}catch (IOException e){
+			// TODO Auto-generated catch block
+			// MERE MONGO
+			
+			e.printStackTrace();
+		}
     }
 }
+
+
+
+
+

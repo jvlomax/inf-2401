@@ -5,6 +5,9 @@ package no.uio.ifi.cflat.scanner;
  */
 
 import static no.uio.ifi.cflat.scanner.Token.eofToken;
+
+import java.io.IOException;
+
 import no.uio.ifi.cflat.chargenerator.CharGenerator;
 import no.uio.ifi.cflat.error.Error;
 import no.uio.ifi.cflat.log.Log;
@@ -36,84 +39,169 @@ public class Scanner {
 	while (nextNextToken == null) {
 	    nextNextLine = CharGenerator.curLineNum();
 	    
-	    if (! CharGenerator.isMoreToRead()) {
-	    	nextNextToken = eofToken;
-		
-	    } else 
-	    //-- Must be changed in part 0:
-	    {
+	    try{
+			if (! CharGenerator.isMoreToRead()) {
+				nextNextToken = eofToken;
+			
+			} else 
+			//-- Must be changed in part 0:
+			{
 //		Error.error(nextNextLine,
 //			    "Illegal symbol: '" + CharGenerator.curC + "'!");
-	    	Token token;
-	    	if(isLetterAZ(CharGenerator.curC)){
-	    	
-	    	
-	    	}else{
-		    	switch(CharGenerator.curC){
-		    		case '(':
-		    			token = Token.leftParToken;
-		    			break;
-		    		case ')':
-		    			token = Token.rightParToken;
-		    			break;
-		    		case '+':
-		    			token = Token.addToken;
-		    			break;
-		    		case '-':
-		    			token = Token.subtractToken;
-		    			break;
-		    		case '*':
-		    			token = Token.multiplyToken;
-		    			break;
-		    		case '/':
-		    			token = Token.divideToken;
-		    			break;
-		    		case ']':
-		    			token = Token.rightBracketToken;
-		    			break;
-		    		case '[':
-		    			token = Token.leftBracketToken;
-		    			break;
-		    		case '{':
-		    			token = Token.leftCurlToken;
-		    			break;
-		    		case '}':
-		    			token = Token.rightCurlToken;
-		    			break;
-		    		case ',':
-		    			token = Token.commaToken;
-		    			break;
-		    		case ';':
-		    			token = Token.semicolonToken;
-		    			break;
-		    	}
-	    		
-	    		
-	    		/*
-	    		 * needs additional checking
-	    		 */
-//	    		case '<':
-//	    			token = Token.lessToken;
-//	    			break;
-//	    		case '>':
-//	    			token = Token.greaterToken;
-//		    	case '=':
-//		    		token = Token
-	    	}	
-	    		System.out.print("current C: " + CharGenerator.curC);
-	    		
-	    		readNext();
-	    		
-	    }
-	}
-	Log.noteToken();
+				Token token = null;
+				if(CharGenerator.curC == '#'){
+					//print line to log and skip to next line
+					
+					System.out.print("curC: " + CharGenerator.curC);
+					CharGenerator.skipLine();
+					CharGenerator.readNext();
+				}else if(isValidNameChar(CharGenerator.curC)){
+					//read the entire fucking word:
+					// read until either whitespace is found or a non AZ char is found
+					String word = "";
+					while (isValidNameChar(CharGenerator.curC)){
+						word += CharGenerator.curC;
+						CharGenerator.readNext();
+					}
+					System.out.print("EVERYWHERE2");
+					switch(word){
+					
+					
+			    		case "double":
+			    			token = Token.doubleToken;
+			    			break;
+			    		case "int":
+			    			token = Token.intToken;
+			    			
+			    			break;
+			    		case "if":
+			    			token = Token.ifToken;
+			    			break;
+			    		case "else":
+			    			token = Token.elseToken;
+			    			break;
+			    		case "for":
+			    			token = Token.forToken;
+			    			break;
+			    		case "while":
+			    			token = Token.whileToken;
+			    			break;
+			    		case "return":
+			    			token = Token.returnToken;
+			    			break;
+			    		default:
+			    			if(isStringNumber(word)){
+				    			token = Token.numberToken;
+				    		}else{
+				    			token = Token.nameToken;
+				    		}
+			    			break;
+					}
+				}else{
+					switch(CharGenerator.curC){
+			    		case '(':
+			    			token = Token.leftParToken;
+			    			break;
+			    		case ')':
+			    			token = Token.rightParToken;
+			    			break;
+			    		case '+':
+			    			token = Token.addToken;
+			    			break;
+			    		case '-':
+			    			token = Token.subtractToken;
+			    			break;
+			    		case '*':
+			    			token = Token.multiplyToken;
+			    			break;
+			    		case '/':
+			    			token = Token.divideToken;
+			    			break;
+			    		case ']':
+			    			token = Token.rightBracketToken;
+			    			break;
+			    		case '[':
+			    			token = Token.leftBracketToken;
+			    			break;
+			    		case '{':
+			    			token = Token.leftCurlToken;
+			    			break;
+			    		case '}':
+			    			token = Token.rightCurlToken;
+			    			break;
+			    		case ',':
+			    			token = Token.commaToken;
+			    			break;
+			    		case ';':
+			    			token = Token.semicolonToken;
+			    			break;
+			    		case '<':
+			    			readNext();
+			    			if(CharGenerator.curC == '='){
+			    				token = Token.lessEqualToken;
+			    			}else{
+			    				token = Token.lessToken;
+			    			}
+			    			break;
+			    		case '>':
+			    			token = Token.greaterToken;
+				    	case '=':
+				    		readNext();
+				    		if(CharGenerator.curC == '='){
+				    			token = Token.equalToken;
+				    		}else if(CharGenerator.curC == '>'){
+				    			token = Token.greaterEqualToken;
+				    		}else{
+				    			token = Token.assignToken;
+				    		}
+			    
+					}	
+					nextNextToken = token;
+					
+					
+					System.out.print("current C: " + CharGenerator.curC);
+					System.out.print("EVERYWHERE3");
+					
+					
+					
+					CharGenerator.readNext();
+					}		
+				}
+		}catch (IOException e){
+			// TODO Auto-generated catch block
+			// MONGOOOO!!
+			e.printStackTrace();
+			}
+	    
+		}
+		Log.noteToken();
     }
 	
     private static boolean isLetterAZ(char c) {
 		return Character.isLetter(c);
 			
     }
-	
+    
+    
+    private static boolean isWhiteSpace(char c){
+    	return(Character.isWhitespace(c));
+    }
+    
+    private static boolean isValidNameChar(char c){
+    	return (Character.isLetter(c) || Character.isDigit(c) || c == '_' ? true : false);
+    }
+
+    private static boolean isStringNumber(String s){
+    	try{
+    		Integer.parseInt(s);
+    		return true;
+    	}catch(NumberFormatException e){
+    		return false;
+    	}
+    }
+    
+   
+    
     public static void check(Token t) {
 	if (curToken != t)
 	    Error.expected("A " + t);

@@ -1,1 +1,9 @@
-0: # -------------
+1: # Program 'mini'
+2: # -------------
+3: # A minimal Cb program!
+5: int main ()
+6: {
+Scanner: leftParToken
+7:     putchar('x');
+Scanner: leftParToken
+8: }
