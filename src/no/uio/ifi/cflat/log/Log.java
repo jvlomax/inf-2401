@@ -84,10 +84,42 @@ public class Log {
      */
     public static void noteToken() {
 	if (! doLogScanner) return;
-
+	
+		// WARNING: Android convention below
+		Token token = Scanner.nextNextToken;
 		
-		if (Scanner.nextNextToken == Token.leftParToken){
+		if (token == Token.leftParToken){
 			Log.writeLogLine("Scanner: leftParToken");
+		}else if(token == Token.rightParToken){
+			Log.writeLogLine("Scanner: righParToken");
+		}else if(token == Token.leftBracketToken){
+			Log.writeLogLine("Scanner: leftBracketToken");
+		}else if(token == Token.rightBracketToken){
+			Log.writeLogLine("Scanner: rightBracketToken");
+		}else if(token == Token.rightCurlToken){
+			Log.writeLogLine("Scanner: rightCurlToken");
+		}else if(token == Token.leftCurlToken){
+			Log.writeLogLine("Scanner: leftCurlToken");
+		}else if(token == Token.addToken){
+			Log.writeLogLine("Scanner: addToken");
+		}else if(token == Token.divideToken){
+			Log.writeLogLine("Scanner: divideToken");	
+		}else if(token == Token.subtractToken){
+			Log.writeLogLine("Scanner: subtractToken");
+		}else if(token == Token.multiplyToken){
+			Log.writeLogLine("Scanner: multiplyToken");
+		}else if(token == Token.nameToken){
+			Log.writeLogLine("Scanner: nameToken");
+		}else if(token == Token.numberToken){
+			Log.writeLogLine("Scanner: numberToken");
+		}else if(token == Token.doubleToken){
+			Log.writeLogLine("Scanner: doubleToken");
+		}else if(token == Token.intToken){
+			Log.writeLogLine("Scanner: intToken");
+		}else if(token == Token.commaToken){
+			Log.writeLogLine("Scanner: commaToken");
+		}else if(token == Token.semicolonToken){
+			Log.writeLogLine("Scanner: semicolonToken");
 		}
     }
 

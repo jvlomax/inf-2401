@@ -5,5 +5,9 @@
 6: {
 Scanner: leftParToken
 7:     putchar('x');
+Scanner: righParToken
+Scanner: leftCurlToken
 Scanner: leftParToken
 8: }
+Scanner: righParToken
+Scanner: semicolonToken
