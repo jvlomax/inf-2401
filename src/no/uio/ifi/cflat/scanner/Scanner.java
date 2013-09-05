@@ -162,7 +162,7 @@ public class Scanner {
 							if (CharGenerator.nextC == '=') {
 								CharGenerator.readNext();
 								token = Token.equalToken;
-							} else if (CharGenerator.curC == '>') {
+							} else if (CharGenerator.nextC == '>') {
 								token = Token.greaterEqualToken;
 							} else {
 								token = Token.assignToken;
@@ -176,6 +176,12 @@ public class Scanner {
 								token = Token.numberToken;
 								nextNextNum = (int)CharGenerator.curC;
 								CharGenerator.readNext();
+							}
+							break;
+						case '!':
+							if(CharGenerator.nextC == '='){
+								CharGenerator.readNext();
+								token = Token.notEqualToken;
 							}
 							break;
 						}

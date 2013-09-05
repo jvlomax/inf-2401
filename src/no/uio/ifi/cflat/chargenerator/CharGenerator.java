@@ -31,6 +31,8 @@ public class CharGenerator {
 	}
 	try{
 		sourceLine = sourceFile.readLine();
+		sourceLine += "  ";
+		Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
 	}catch (IOException e){
 		// TODO Auto-generated catch block
 		e.printStackTrace();

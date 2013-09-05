@@ -122,6 +122,30 @@ public class Log {
 			Log.writeLogLine("Scanner: semicolonToken");
 		}else if(token == Token.returnToken){
 			Log.writeLogLine("Scanner: returnToken");
+		}else if(token == Token.eofToken){
+			Log.writeLogLine("Scanner: eofToken");
+		}else if(token == Token.assignToken){
+			Log.writeLogLine("Scanner: assignToken");
+		}else if(token == Token.elseToken){
+			Log.writeLogLine("Scanner: elseToken");
+		}else if(token == Token.equalToken){
+			Log.writeLogLine("Scanner: equalsToken");
+		}else if(token == Token.forToken){
+			Log.writeLogLine("Scanner: forToken");
+		}else if(token == Token.greaterEqualToken){
+			Log.writeLogLine("Scanner: greaterEqualToken");
+		}else if(token == Token.greaterToken){
+			Log.writeLogLine("Scanner: greaterToken");
+		}else if(token == Token.ifToken){
+			Log.writeLogLine("Scanner: ifToken");
+		}else if(token == Token.lessEqualToken){
+			Log.writeLogLine("Scanner: lessEqualToken");
+		}else if(token == Token.lessToken){
+			Log.writeLogLine("Scanner: lessToken");
+		}else if(token == Token.notEqualToken){
+			Log.writeLogLine("Scanner: notEqualToken");
+		}else if(token == Token.whileToken){
+			Log.writeLogLine("Scanner: whileToken");
 		}
     }
 
