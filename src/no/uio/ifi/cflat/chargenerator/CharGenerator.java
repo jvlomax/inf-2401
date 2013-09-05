@@ -17,74 +17,87 @@ import no.uio.ifi.cflat.log.Log;
  * Module for reading single characters.
  */
 public class CharGenerator {
-    public static char curC, nextC;
-	
-    private static LineNumberReader sourceFile = null;
-    private static String sourceLine;
-    private static int sourcePos;
-	
-    public static void init() {
-	try {
-	    sourceFile = new LineNumberReader(new FileReader(Cflat.sourceName));
-	} catch (FileNotFoundException e) {
-	    Error.error("Cannot read " + Cflat.sourceName + "!");
+	public static char curC, nextC;
+
+	private static LineNumberReader sourceFile = null;
+	private static String sourceLine;
+	private static int sourcePos;
+
+	public static void init() {
+		try {
+			sourceFile = new LineNumberReader(new FileReader(Cflat.sourceName));
+		} catch (FileNotFoundException e) {
+			Error.error("Cannot read " + Cflat.sourceName + "!");
+		}
+		try {
+			sourceLine = sourceFile.readLine();
+			sourceLine += "  ";
+			Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sourcePos = 0;
+		curC = nextC = ' ';
+		readNext();
+		readNext();
 	}
-	try{
-		sourceLine = sourceFile.readLine();
-		sourceLine += "  ";
-		Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
-	}catch (IOException e){
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+
+	public static void finish() {
+		if (sourceFile != null) {
+			try {
+				sourceFile.close();
+			} catch (IOException e) {
+
+			}
+		}
 	}
-	sourcePos = 0;  curC = nextC = ' '; 
-	readNext();  readNext();
-    }
-	
-    public static void finish() {
-	if (sourceFile != null) {
-	    try {
-		sourceFile.close();
-	    } catch (IOException e) {}
-	}
-    }
-	
-    public static boolean isMoreToRead() throws IOException {
-    	if(sourcePos < sourceLine.length() || sourceFile.ready()){
+
+	/*
+	 * Check to see if there is more to read in the file or if we have reached
+	 * the end of the file
+	 * 
+	 * @return True if there is more to read, otherwise false
+	 */
+	public static boolean isMoreToRead() throws IOException {
+		if (sourcePos < sourceLine.length() || sourceFile.ready()) {
 			return true;
 		}
 		return false;
-    }
-	
-    public static int curLineNum() {
-    	
-    	return (sourceFile == null ? 0 : sourceFile.getLineNumber());
-    }
+	}
 
-    
-    public static void readNext() {
-	curC = nextC;
-	
 	/*
-	 * Read the next line unless we are the end of it
+	 * @return The current line numbder
 	 */
-		if(sourcePos < sourceLine.length()){
+	public static int curLineNum() {
+
+		return (sourceFile == null ? 0 : sourceFile.getLineNumber());
+	}
+
+	/*
+	 * Put the next character and move it into curC. Also read the next
+	 * character and assign it to nextC. If we have arraived at the end of the line,
+	 * we will move to the next line and read it from the begining
+	 */
+	public static void readNext() {
+		curC = nextC;
+		if (sourcePos < sourceLine.length()) {
 			nextC = sourceLine.charAt(sourcePos);
 			sourcePos += 1;
-		}else{
+		} else {
 			System.out.print("New line\n");
-			try{
+			try {
 				sourceLine = sourceFile.readLine();
 				sourceLine += "  ";
 				Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
-				
-			}catch (IOException e){
-				// TODO Auto-generated catch block
-				// MONGO
+
+			} catch (IOException e) {
+				Log.noteError("Could not read from file");
 				e.printStackTrace();
-			}	
-			if (sourceLine == null){
-				//nextC = '?';
+				return;
+			}
+			if (sourceLine == null) {
+				// nextC = '?';
 				return;
 			}
 			sourcePos = 0;
@@ -92,25 +105,22 @@ public class CharGenerator {
 			sourcePos += 1;
 			System.out.printf("curC: %c nextC: %c\n", curC, nextC);
 		}
-    }
-  
-    
-    public static void skipLine(){
-    	
-    	Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
-    	sourcePos = 0;
-    	try{
+	}
+
+	/*
+	 * Skip the current line and start at he beginin of the next. Does not
+	 * change curC or nextC
+	 */
+	public static void skipLine() {
+
+		Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
+		sourcePos = 0;
+		try {
 			sourceLine = sourceFile.readLine();
-		}catch (IOException e){
-			// TODO Auto-generated catch block
-			// MERE MONGO
-			
+		} catch (IOException e) {
+			Log.noteError("Could not read from file");
 			e.printStackTrace();
+			return;
 		}
-    }
+	}
 }
-
-
-
-
-

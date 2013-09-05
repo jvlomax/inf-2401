@@ -45,17 +45,13 @@ public class Scanner {
 			System.out.print("curC: " + CharGenerator.curC + "\n");
 			System.out.print("nextC: " + CharGenerator.nextC + "\n");
 			try {
-				
+
 				if (!CharGenerator.isMoreToRead()) {
 					System.out.print("End of File\n");
-					
+
 					nextNextToken = eofToken;
-				} else
-				// -- Must be changed in part 0:
-				{
-					
-					// Error.error(nextNextLine,
-					// "Illegal symbol: '" + CharGenerator.curC + "'!");
+				} else {
+
 					Token token = null;
 					if (CharGenerator.curC == '#') {
 						// print line to log and skip to next line
@@ -74,7 +70,6 @@ public class Scanner {
 							word += CharGenerator.curC;
 						}
 						System.out.print("WordOrNumber: " + word + "\n");
-						// System.out.print("EVERYWHERE2");
 						word.trim();
 						switch (word) {
 
@@ -171,55 +166,80 @@ public class Scanner {
 						case '\'':
 							System.out.print("Fnutt\n");
 							CharGenerator.readNext();
-							if(CharGenerator.nextC == '\''){
-								System.out.printf("Char: %c\n", CharGenerator.curC);
+							if (CharGenerator.nextC == '\'') {
+								System.out.printf("Char: %c\n",
+										CharGenerator.curC);
 								token = Token.numberToken;
-								nextNextNum = (int)CharGenerator.curC;
+								nextNextNum = (int) CharGenerator.curC;
 								CharGenerator.readNext();
 							}
 							break;
 						case '!':
-							if(CharGenerator.nextC == '='){
+							if (CharGenerator.nextC == '=') {
 								CharGenerator.readNext();
 								token = Token.notEqualToken;
 							}
 							break;
 						}
-
-						// System.out.print("current C: " + CharGenerator.curC);
-						// System.out.print("EVERYWHERE3");
-
-						
 					}
-					
 					nextNextToken = token;
 					System.out.print("Set Token: " + nextNextToken + "\n");
 					CharGenerator.readNext();
-
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				// MONGOOOO!!
+				Log.noteError("Error reading the file");
 				e.printStackTrace();
 			}
 		}
 		Log.noteToken();
+		// Error.error(nextNextLine,
+		// "Illegal symbol: '" + CharGenerator.curC + "'!");
 	}
 
+	/*
+	 * Check to see if a character is a [a-zA-Z] letter
+	 * 
+	 * @param c char to check
+	 * 
+	 * @return true if char is an AZ letter
+	 */
 	private static boolean isLetterAZ(char c) {
 		return Character.isLetter(c);
 
 	}
 
+	/*
+	 * Check to see if a character is whitespace. This includes tab, carriage
+	 * return, line feed, etc.
+	 * 
+	 * @param c char to check
+	 * 
+	 * @return true if char is a witespace character
+	 */
 	private static boolean isWhiteSpace(char c) {
 		return (Character.isWhitespace(c));
 	}
 
+	/*
+	 * Check to see if a character is a valid character to use in a Cb name
+	 * token
+	 * 
+	 * @param c char to check
+	 * 
+	 * @return true if char is a valid in a Cb name
+	 */
 	private static boolean isValidNameChar(char c) {
 		return (Character.isLetter(c) || Character.isDigit(c) || c == '_' ? true
 				: false);
 	}
 
+	/*
+	 * Check to see if a string only consists of number
+	 * 
+	 * @param s String to check
+	 * 
+	 * @return True if the string only consists of numbers
+	 */
 	private static boolean isStringNumber(String s) {
 		try {
 			Integer.parseInt(s);
