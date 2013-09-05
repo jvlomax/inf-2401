@@ -83,11 +83,11 @@ public class Log {
      * This note will only be made if the user has requested it.
      */
     public static void noteToken() {
-	if (! doLogScanner) return;
+    	if (! doLogScanner) return;
 	
 		// WARNING: Android convention below
 		Token token = Scanner.nextNextToken;
-		
+	
 		if (token == Token.leftParToken){
 			Log.writeLogLine("Scanner: leftParToken");
 		}else if(token == Token.rightParToken){
@@ -109,9 +109,9 @@ public class Log {
 		}else if(token == Token.multiplyToken){
 			Log.writeLogLine("Scanner: multiplyToken");
 		}else if(token == Token.nameToken){
-			Log.writeLogLine("Scanner: nameToken");
+			Log.writeLogLine("Scanner: nameToken " + Scanner.nextNextName);
 		}else if(token == Token.numberToken){
-			Log.writeLogLine("Scanner: numberToken");
+			Log.writeLogLine("Scanner: numberToken " + Scanner.nextNextNum);
 		}else if(token == Token.doubleToken){
 			Log.writeLogLine("Scanner: doubleToken");
 		}else if(token == Token.intToken){
@@ -120,6 +120,8 @@ public class Log {
 			Log.writeLogLine("Scanner: commaToken");
 		}else if(token == Token.semicolonToken){
 			Log.writeLogLine("Scanner: semicolonToken");
+		}else if(token == Token.returnToken){
+			Log.writeLogLine("Scanner: returnToken");
 		}
     }
 

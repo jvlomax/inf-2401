@@ -51,7 +51,7 @@ public class CharGenerator {
     	if(sourcePos < sourceLine.length() || sourceFile.ready()){
 			return true;
 		}
-		return true;
+		return false;
     }
 	
     public static int curLineNum() {
@@ -70,8 +70,10 @@ public class CharGenerator {
 			nextC = sourceLine.charAt(sourcePos);
 			sourcePos += 1;
 		}else{
+			System.out.print("New line\n");
 			try{
 				sourceLine = sourceFile.readLine();
+				sourceLine += "  ";
 				Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
 				
 			}catch (IOException e){
@@ -80,14 +82,17 @@ public class CharGenerator {
 				e.printStackTrace();
 			}	
 			if (sourceLine == null){
-				nextC = '?';
+				//nextC = '?';
 				return;
 			}
 			sourcePos = 0;
 			nextC = sourceLine.charAt(sourcePos);
-			sourcePos += 1;	
+			sourcePos += 1;
+			System.out.printf("curC: %c nextC: %c\n", curC, nextC);
 		}
     }
+  
+    
     public static void skipLine(){
     	
     	Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);

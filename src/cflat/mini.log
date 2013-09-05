@@ -1,13 +1,18 @@
 1: # Program 'mini'
 2: # -------------
 3: # A minimal Cb program!
-5: int main ()
-6: {
+5: int main ()  
+Scanner: intToken
+Scanner: nameToken main
 Scanner: leftParToken
-7:     putchar('x');
 Scanner: righParToken
+6: {  
 Scanner: leftCurlToken
+7:     putchar('x');  
+Scanner: nameToken putchar
 Scanner: leftParToken
-8: }
+Scanner: numberToken 120
 Scanner: righParToken
 Scanner: semicolonToken
+8: }  
+Scanner: rightCurlToken
