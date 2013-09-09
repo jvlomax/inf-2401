@@ -97,7 +97,6 @@ public class CharGenerator {
 				return;
 			}
 			if (sourceLine == null) {
-				// nextC = '?';
 				return;
 			}
 			sourcePos = 0;
