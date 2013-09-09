@@ -59,6 +59,12 @@ public class Scanner {
 						System.out.print("Skipping line\n");
 						CharGenerator.skipLine();
 						CharGenerator.readNext();
+					}else if(CharGenerator.curC == '/' && CharGenerator.nextC == '*'){
+						CharGenerator.readNext(); CharGenerator.readNext();
+						while(!(CharGenerator.curC == '*' && CharGenerator.nextC =='/')){
+							CharGenerator.readNext();
+						}
+						CharGenerator.readNext();
 					} else if (isValidNameChar(CharGenerator.curC)) {
 						System.out.print("validNameChar");
 						// read the entire fucking word:

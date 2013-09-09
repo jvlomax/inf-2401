@@ -1,8 +1,11 @@
 # Program 'mini'
 # -------------
 # A minimal Cb program!
-
+/* one line comment */
 int main ()
 {
+/* multi
+ * line
+ * comment */
     putchar('x');
 }

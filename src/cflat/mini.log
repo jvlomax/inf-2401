@@ -9,12 +9,15 @@ Scanner: leftParToken
 Scanner: righParToken
 6: {  
 Scanner: leftCurlToken
-7:     putchar('x');  
+7: /* multi  
+8:  * line  
+9:  * comment */  
+10:     putchar('x');  
 Scanner: nameToken putchar
 Scanner: leftParToken
 Scanner: numberToken 120
 Scanner: righParToken
 Scanner: semicolonToken
-8: }  
+11: }  
 Scanner: rightCurlToken
 Scanner: eofToken
