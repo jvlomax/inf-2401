@@ -42,12 +42,10 @@ public class Scanner {
 		nextNextToken = null;
 		while (nextNextToken == null) {
 			nextNextLine = CharGenerator.curLineNum();
-			System.out.print("curC: " + CharGenerator.curC + "\n");
-			System.out.print("nextC: " + CharGenerator.nextC + "\n");
 			try {
 
 				if (!CharGenerator.isMoreToRead()) {
-					System.out.print("End of File\n");
+					
 
 					nextNextToken = eofToken;
 				} else {
@@ -55,8 +53,6 @@ public class Scanner {
 					Token token = null;
 					if (CharGenerator.curC == '#') {
 						// print line to log and skip to next line
-
-						System.out.print("Skipping line\n");
 						CharGenerator.skipLine();
 						CharGenerator.readNext();
 					}else if(CharGenerator.curC == '/' && CharGenerator.nextC == '*'){
@@ -66,16 +62,14 @@ public class Scanner {
 						}
 						CharGenerator.readNext();
 					} else if (isValidNameChar(CharGenerator.curC)) {
-						System.out.print("validNameChar");
-						// read the entire fucking word:
-						// read until either whitespace is found or a non AZ
-						// char is found
+						
+						
 						String word = "" + CharGenerator.curC;
 						while (isValidNameChar(CharGenerator.nextC)) {
 							CharGenerator.readNext();
 							word += CharGenerator.curC;
 						}
-						System.out.print("WordOrNumber: " + word + "\n");
+						
 						word.trim();
 						switch (word) {
 
@@ -111,7 +105,7 @@ public class Scanner {
 							break;
 						}
 					} else {
-						System.out.print("Symbol\n");
+						
 						switch (CharGenerator.curC) {
 						case '(':
 							token = Token.leftParToken;
@@ -170,11 +164,10 @@ public class Scanner {
 							}
 							break;
 						case '\'':
-							System.out.print("Fnutt\n");
+							
 							CharGenerator.readNext();
 							if (CharGenerator.nextC == '\'') {
-								System.out.printf("Char: %c\n",
-										CharGenerator.curC);
+								
 								token = Token.numberToken;
 								nextNextNum = (int) CharGenerator.curC;
 								CharGenerator.readNext();
@@ -189,7 +182,7 @@ public class Scanner {
 						}
 					}
 					nextNextToken = token;
-					System.out.print("Set Token: " + nextNextToken + "\n");
+					
 					CharGenerator.readNext();
 				}
 			} catch (IOException e) {

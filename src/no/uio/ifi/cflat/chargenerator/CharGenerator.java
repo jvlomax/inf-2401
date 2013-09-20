@@ -102,7 +102,6 @@ public class CharGenerator {
 			sourcePos = 0;
 			nextC = sourceLine.charAt(sourcePos);
 			sourcePos += 1;
-			System.out.printf("curC: %c nextC: %c\n", curC, nextC);
 		}
 	}
 

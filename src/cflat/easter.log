@@ -1,0 +1,12 @@
+Scanner: leftParToken
+Scanner: commaToken
+2:     return x - (x/y*y);
+Scanner: righParToken
+Scanner: leftCurlToken
+Scanner: subtractToken
+Scanner: leftParToken
+Scanner: divideToken
+Scanner: multiplyToken
+3: }
+Scanner: righParToken
+4: 
