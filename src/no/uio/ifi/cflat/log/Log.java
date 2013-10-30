@@ -172,10 +172,10 @@ public class Log {
     }
 
     public static void indentTree() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 
     public static void outdentTree() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 }

@@ -24,11 +24,11 @@ public class Syntax {
     static Program program;
 
     public static void init() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 
     public static void finish() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 
     public static void checkProgram() {
@@ -118,7 +118,7 @@ abstract class DeclList extends SyntaxUnit {
     DeclList outerScope;
 
     DeclList () {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 
     @Override void check(DeclList curDecls) {
@@ -131,11 +131,11 @@ abstract class DeclList extends SyntaxUnit {
     }
 
     @Override void printTree() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 
     void addDecl(Declaration d) {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 
     int dataSize() {
@@ -170,7 +170,7 @@ class GlobalDeclList extends DeclList {
 		} else if (Scanner.nextNextToken == leftBracketToken) {
 		    gdl.addDecl(GlobalArrayDecl.parse());
 		} else {
-		    //-- Must be changed in part 1:
+		    //TODO:-- Must be changed in part 1:
 		}
 	    } else {
 		Error.expected("A declaration");
@@ -191,7 +191,7 @@ class LocalDeclList extends DeclList {
     }
 
     static LocalDeclList parse() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
 	return null;
     }
 }
@@ -207,7 +207,7 @@ class ParamDeclList extends DeclList {
     }
 
     static ParamDeclList parse() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
 	return null;
     }
 }
@@ -330,12 +330,12 @@ class GlobalArrayDecl extends VarDecl {
     static GlobalArrayDecl parse() {
 	Log.enterParser("<var decl>");
 
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
 	return null;
     }
 
     @Override void printTree() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 }
 
@@ -368,7 +368,7 @@ class GlobalSimpleVarDecl extends VarDecl {
     static GlobalSimpleVarDecl parse() {
 	Log.enterParser("<var decl>");
 
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
 	return null;
     }
 }
@@ -401,12 +401,12 @@ class LocalArrayDecl extends VarDecl {
     static LocalArrayDecl parse() {
 	Log.enterParser("<var decl>");
 
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
 	return null;
     }
 
     @Override void printTree() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 
 }
@@ -439,7 +439,7 @@ class LocalSimpleVarDecl extends VarDecl {
     static LocalSimpleVarDecl parse() {
 	Log.enterParser("<var decl>");
 
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
 	return null;
     }
 }
@@ -474,7 +474,7 @@ class ParamDecl extends VarDecl {
     static ParamDecl parse() {
 	Log.enterParser("<param decl>");
 
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
 	return null;
     }
 }
@@ -484,14 +484,14 @@ class ParamDecl extends VarDecl {
  * A <func decl>
  */
 class FuncDecl extends Declaration {
-    //-- Must be changed in part 1+2:
+    //TODO:-- Must be changed in part 1+2:
 	
     FuncDecl(String n) {
 	// Used for user functions:
 
 	super(n);
 	assemblerName = (Cflat.underscoredGlobals() ? "_" : "") + n;
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 
     @Override int declSize() {
@@ -519,12 +519,12 @@ class FuncDecl extends Declaration {
     }
 
     static FuncDecl parse() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
 	return null;
     }
 
     @Override void printTree() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 }
 
@@ -533,7 +533,7 @@ class FuncDecl extends Declaration {
  * A <statm list>.
  */
 class StatmList extends SyntaxUnit {
-    //-- Must be changed in part 1:
+    //TODO:-- Must be changed in part 1:
 
     @Override void check(DeclList curDecls) {
 	//-- Must be changed in part 2:
@@ -549,7 +549,7 @@ class StatmList extends SyntaxUnit {
 	StatmList sl = new StatmList();
 	Statement lastStatm = null;
 	while (Scanner.curToken != rightCurlToken) {
-	    //-- Must be changed in part 1:
+	    //TODO:-- Must be changed in part 1:
 	}
 
 	Log.leaveParser("</statm list>");
@@ -557,7 +557,7 @@ class StatmList extends SyntaxUnit {
     }
 
     @Override void printTree() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 }
 
@@ -574,15 +574,15 @@ abstract class Statement extends SyntaxUnit {
 	Statement s = null;
 	if (Scanner.curToken==nameToken && 
 	    Scanner.nextToken==leftParToken) {
-	    //-- Must be changed in part 1:
+	    //TODO:-- Must be changed in part 1:
 	} else if (Scanner.curToken == nameToken) {
-	    //-- Must be changed in part 1:
+	    //TODO:-- Must be changed in part 1:
 	} else if (Scanner.curToken == forToken) {
-	    //-- Must be changed in part 1:
+	    //TODO:-- Must be changed in part 1:
 	} else if (Scanner.curToken == ifToken) {
 	    s = IfStatm.parse();
 	} else if (Scanner.curToken == returnToken) {
-	    //-- Must be changed in part 1:
+	    //TODO:-- Must be changed in part 1:
 	} else if (Scanner.curToken == whileToken) {
 	    s = WhileStatm.parse();
 	} else if (Scanner.curToken == semicolonToken) {
@@ -602,7 +602,7 @@ abstract class Statement extends SyntaxUnit {
  * An <empty statm>.
  */
 class EmptyStatm extends Statement {
-    //-- Must be changed in part 1+2:
+    //TODO:-- Must be changed in part 1+2:
 
     @Override void check(DeclList curDecls) {
 	//-- Must be changed in part 2:
@@ -613,12 +613,12 @@ class EmptyStatm extends Statement {
     }
 
     static EmptyStatm parse() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
 	return null;
     }
 
     @Override void printTree() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 }
 	
@@ -626,13 +626,13 @@ class EmptyStatm extends Statement {
 /*
  * A <for-statm>.
  */
-//-- Must be changed in part 1+2:
+//TODO:-- Must be changed in part 1+2:
 
 /*
  * An <if-statm>.
  */
 class IfStatm extends Statement {
-    //-- Must be changed in part 1+2:
+    //TODO:-- Must be changed in part 1+2:
 
     @Override void check(DeclList curDecls) {
 	//-- Must be changed in part 2:
@@ -643,12 +643,12 @@ class IfStatm extends Statement {
     }
 
     static IfStatm parse() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
 	return null;
     }
 
     @Override void printTree() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 }
 
@@ -656,7 +656,7 @@ class IfStatm extends Statement {
 /*
  * A <return-statm>.
  */
-//-- Must be changed in part 1+2:
+//TODO:-- Must be changed in part 1+2:
 
 
 /*
@@ -709,7 +709,7 @@ class WhileStatm extends Statement {
 }
 
 
-//-- Must be changed in part 1+2:
+//TODO:-- Must be changed in part 1+2:
 
 
 /*
@@ -732,14 +732,14 @@ class ExprList extends SyntaxUnit {
 
 	Log.enterParser("<expr list>");
 
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
 	return null;
     }
 
     @Override void printTree() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
-    //-- Must be changed in part 1:
+    //TODO:-- Must be changed in part 1:
 }
 
 
@@ -775,7 +775,7 @@ class Expression extends Operand {
     }
 
     @Override void printTree() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 }
 
@@ -784,7 +784,7 @@ class Expression extends Operand {
  * A <term>
  */
 class Term extends SyntaxUnit {
-    //-- Must be changed in part 1+2:
+    //TODO:-- Must be changed in part 1+2:
 
     @Override void check(DeclList curDecls) {
 	//-- Must be changed in part 2:
@@ -795,16 +795,16 @@ class Term extends SyntaxUnit {
     }
 
     static Term parse() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
 	return null;
     }
 
     @Override void printTree() {
-	//-- Must be changed in part 1+2:
+	//TODO:-- Must be changed in part 1+2:
     }
 }
 
-//-- Must be changed in part 1+2:
+//TODO:-- Must be changed in part 1+2:
 
 /*
  * An <operator>
@@ -818,7 +818,7 @@ abstract class Operator extends SyntaxUnit {
 }
 
 
-//-- Must be changed in part 1+2:
+//TODO:-- Must be changed in part 1+2:
 
 
 /*
@@ -916,7 +916,7 @@ abstract class Operand extends SyntaxUnit {
  * A <function call>.
  */
 class FunctionCall extends Operand {
-    //-- Must be changed in part 1+2:
+    //TODO:-- Must be changed in part 1+2:
 
     @Override void check(DeclList curDecls) {
 	//-- Must be changed in part 2:
@@ -927,14 +927,14 @@ class FunctionCall extends Operand {
     }
 
     static FunctionCall parse() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
 	return null;
     }
 
     @Override void printTree() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
-    //-- Must be changed in part 1+2:
+    //TODO:-- Must be changed in part 1+2:
 }
 
 
@@ -953,7 +953,7 @@ class Number extends Operand {
     }
 
     static Number parse() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
 	return null;
     }
 
@@ -992,11 +992,11 @@ class Variable extends Operand {
 
     static Variable parse() {
 	Log.enterParser("<variable>");
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
 	return null;
     }
 
     @Override void printTree() {
-	//-- Must be changed in part 1:
+	//TODO:-- Must be changed in part 1:
     }
 }
