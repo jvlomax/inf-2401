@@ -603,7 +603,7 @@ abstract class Statement extends SyntaxUnit {
  */
 class EmptyStatm extends Statement {
     //TODO:-- Must be changed in part 1+2:
-
+	
     @Override void check(DeclList curDecls) {
 	//-- Must be changed in part 2:
     }
@@ -613,7 +613,11 @@ class EmptyStatm extends Statement {
     }
 
     static EmptyStatm parse() {
-	//TODO:-- Must be changed in part 1:
+	//-- Must be changed in part 1:
+    	Log.enterParser("<empty-statm>");
+    	Scanner.skip(semicolonToken);
+    	Log.leaveParser("</empty-statm>");
+    	
 	return null;
     }
 
@@ -643,7 +647,7 @@ class IfStatm extends Statement {
     }
 
     static IfStatm parse() {
-	//TODO:-- Must be changed in part 1:
+	//:-- Must be changed in part 1:
 	return null;
     }
 
@@ -656,8 +660,39 @@ class IfStatm extends Statement {
 /*
  * A <return-statm>.
  */
-//TODO:-- Must be changed in part 1+2:
-
+//-- Must be changed in part 1+2:
+class ReturnStatm extends Statement {
+	Expression retVal;
+	
+	@Override
+	void check(DeclList curDecls){
+		retVal.check(curDecls);
+	}
+	
+	@Override 
+	void genCode(FuncDecl curFunc){
+		//TODO: fill in
+	}
+	
+	
+	static ReturnStatm parse() {
+		Log.enterParser("<return-statm>");
+		ReturnStatm rs = new ReturnStatm();
+		Scanner.readNext();
+		rs.retVal = Expression.parse();
+		Scanner.skip(semicolonToken);
+		Log.leaveParser("</return-statm>");
+		return rs;
+	}
+	
+	@Override
+	void printTree() {
+		
+		Log.wTree("return ");
+		retVal.printTree();
+		Log.wTree(";");
+	}
+}
 
 /*
  * A <while-statm>.
@@ -926,8 +961,12 @@ class FunctionCall extends Operand {
 	//-- Must be changed in part 2:
     }
 
-    static FunctionCall parse() {
+    static FunctionCall parse() {    	
 	//TODO:-- Must be changed in part 1:
+    	Log.enterParser("<Function call>");
+    	
+    	
+    	Log.leaveParser("</function call>");
 	return null;
     }
 
@@ -954,6 +993,8 @@ class Number extends Operand {
 
     static Number parse() {
 	//TODO:-- Must be changed in part 1:
+    	Log.enterParser("<number>");
+    	Log.leaveParser("</number>");
 	return null;
     }
 
