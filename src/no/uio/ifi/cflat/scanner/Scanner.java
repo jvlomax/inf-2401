@@ -250,9 +250,6 @@ public class Scanner {
 			return true;
 		}else
 			return	false;
-
-		//return (Character.isLetter(c) || Character.isDigit(c) || c == '_' ? true
-		//		: false);
 	}
 
 	/*

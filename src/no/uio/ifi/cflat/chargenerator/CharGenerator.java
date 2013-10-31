@@ -81,12 +81,6 @@ public class CharGenerator {
 	 * we will move to the next line and read it from the begining
 	 */
 	public static void readNext() {
-		int a, b, c;
-		b = 3;
-		c = 5;
-		a = 1;
-		b = c - -a;
-
 		curC = nextC;
 		if(sourcePos == 0){
 			System.out.print("TEST: " + sourceLine + "\n");
