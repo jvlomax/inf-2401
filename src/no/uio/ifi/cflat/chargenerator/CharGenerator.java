@@ -32,7 +32,8 @@ public class CharGenerator {
 		try {
 			sourceLine = sourceFile.readLine();
 			sourceLine += "  ";
-			Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
+			System.out.print("Init: " + sourceLine);
+			//Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,7 +81,17 @@ public class CharGenerator {
 	 * we will move to the next line and read it from the begining
 	 */
 	public static void readNext() {
+		int a, b, c;
+		b = 3;
+		c = 5;
+		a = 1;
+		b = c - -a;
+
 		curC = nextC;
+		if(sourcePos == 0){
+			System.out.print("TEST: " + sourceLine + "\n");
+			Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
+		}
 		if (sourcePos < sourceLine.length()) {
 			nextC = sourceLine.charAt(sourcePos);
 			sourcePos += 1;
@@ -89,6 +100,7 @@ public class CharGenerator {
 			try {
 				sourceLine = sourceFile.readLine();
 				sourceLine += "  ";
+				System.out.print("New Line: " + sourceLine);
 				Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
 
 			} catch (IOException e) {
@@ -110,8 +122,7 @@ public class CharGenerator {
 	 * change curC or nextC
 	 */
 	public static void skipLine() {
-
-		Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
+		//Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
 		sourcePos = 0;
 		try {
 			sourceLine = sourceFile.readLine();

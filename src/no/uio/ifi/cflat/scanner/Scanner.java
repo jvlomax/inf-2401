@@ -101,6 +101,7 @@ public class Scanner {
 							} else {
 								token = Token.nameToken;
 								nextNextName = word;
+								isLetterAZ('a');
 							}
 							break;
 						}
@@ -117,7 +118,20 @@ public class Scanner {
 							token = Token.addToken;
 							break;
 						case '-':
-							token = Token.subtractToken;
+							if (CharGenerator.nextC != ' ') {
+								CharGenerator.readNext();
+								String word = "-" + CharGenerator.curC;
+								while (isValidNameChar(CharGenerator.nextC)) {
+									CharGenerator.readNext();
+									word += CharGenerator.curC;
+								}
+								if (isStringNumber(word)) {
+									token = Token.numberToken;
+									nextNextNum = Integer.valueOf(word);
+								}else
+									System.out.print("expected number, not name");
+							}else
+								token = Token.subtractToken;
 							break;
 						case '*':
 							token = Token.multiplyToken;
@@ -203,8 +217,11 @@ public class Scanner {
 	 * @return true if char is an AZ letter
 	 */
 	private static boolean isLetterAZ(char c) {
-		return Character.isLetter(c);
-
+		int value = (int)c;
+		if ((90 >= value && value >= 65) || (122 >= value && value >= 97))  {
+			return true;
+		}else
+			return	false;
 	}
 
 	/*
@@ -228,8 +245,14 @@ public class Scanner {
 	 * @return true if char is a valid in a Cb name
 	 */
 	private static boolean isValidNameChar(char c) {
-		return (Character.isLetter(c) || Character.isDigit(c) || c == '_' ? true
-				: false);
+		int value = (int)c;
+		if ((90 >= value && value >= 65) || (122 >= value && value >= 97) || (57 >= value && value >= 48) || (value == 95))  {
+			return true;
+		}else
+			return	false;
+
+		//return (Character.isLetter(c) || Character.isDigit(c) || c == '_' ? true
+		//		: false);
 	}
 
 	/*
