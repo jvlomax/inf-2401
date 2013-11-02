@@ -714,7 +714,8 @@ class EmptyStatm extends Statement {
 //TODO:-- Must be changed in part 1+2:
 
 class ForStatm extends Statement {
-
+	ForControl fc;
+	StatmList sl;
 	@Override
 	void check(DeclList curDecls){
 		// TODO Auto-generated method stub
@@ -728,18 +729,72 @@ class ForStatm extends Statement {
 	}
 	
 	static ForStatm parse(){
+		Log.enterParser("<for-statm>");
+		ForStatm f = new ForStatm();
+		Scanner.skip(leftParToken);
+		f.fc = ForControl.parse();
+		Scanner.skip(rightParToken);
+		Scanner.skip(leftBracketToken);
+		f.sl = StatmList.parse();
+		Scanner.skip(rightBracketToken);
+		Log.leaveParser("</for-statm>");
 		return null;
 	}
 
 	@Override
 	void printTree(){
 		// TODO Auto-generated method stub
-		
+		Log.wTree("for ("); fc.printTree(); Log.wTreeLn(") {");
+		Log.indentTree();
+		sl.printTree();
+		Log.outdentTree();
+		Log.wTreeLn("}");
 	}
 	
 	
 }
 
+
+class ForControl extends Statement{
+	Assignment as;
+	Expression e;
+	Assignment as2;
+	@Override
+	void check(DeclList curDecls){
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void genCode(FuncDecl curFunc){
+		// TODO Auto-generated method stub
+		
+	}
+
+	static ForControl parse(){
+		Log.enterParser("<for-control>");
+		ForControl fc = new ForControl();
+		fc.as = Assignment.parse();
+		Scanner.skip(semicolonToken);
+		fc.e = Expression.parse();
+		Scanner.skip(semicolonToken);
+		fc.as2 = Assignment.parse();
+		
+		
+		Log.leaveParser("</for-control>");
+		return fc;
+	}
+	
+	@Override
+	void printTree(){
+	
+		as.printTree(); Log.wTree(";"); e.printTree(); Log.wTree(";"); as2.printTree();
+		
+	}
+	
+	
+	
+}
 
 /*
  * An <if-statm>.
@@ -781,6 +836,15 @@ class IfStatm extends Statement {
 
     @Override void printTree() {
 	//TODO:-- Must be changed in part 1:
+    	Log.wTree("if (");  e.printTree();  Log.wTreeLn(") {");
+    	Log.indentTree();
+    	sl.printTree();
+    	Log.outdentTree();
+    	Log.wTreeLn("}");
+    	if (ep != null){
+    		ep.printTree();
+    	}
+    	
     }
 }
 
@@ -814,7 +878,11 @@ class ElsePart extends Statement{
 	@Override
 	void printTree(){
 		// TODO Auto-generated method stub
-		
+		Log.wTree("else { ");
+		Log.indentTree();
+		sl.printTree();
+		Log.outdentTree();
+		Log.wTreeLn("}");
 	}
 	
 }
