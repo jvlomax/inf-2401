@@ -576,13 +576,16 @@ abstract class Statement extends SyntaxUnit {
 	    Scanner.nextToken==leftParToken) {
 	    //TODO:-- Must be changed in part 1:
 	} else if (Scanner.curToken == nameToken) {
-	    //TODO:-- Must be changed in part 1:
+	    //-- Must be changed in part 1:
+		s = NameStatm.parse();
 	} else if (Scanner.curToken == forToken) {
-	    //TODO:-- Must be changed in part 1:
+	    //-- Must be changed in part 1:
+		s = ForStatm.parse();
 	} else if (Scanner.curToken == ifToken) {
 	    s = IfStatm.parse();
 	} else if (Scanner.curToken == returnToken) {
-	    //TODO:-- Must be changed in part 1:
+	    //-- Must be changed in part 1:
+		s = ReturnStatm.parse();
 	} else if (Scanner.curToken == whileToken) {
 	    s = WhileStatm.parse();
 	} else if (Scanner.curToken == semicolonToken) {
@@ -632,12 +635,40 @@ class EmptyStatm extends Statement {
  */
 //TODO:-- Must be changed in part 1+2:
 
+class ForStatm extends Statement {
+
+	@Override
+	void check(DeclList curDecls){
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void genCode(FuncDecl curFunc){
+		// TODO Auto-generated method stub
+		
+	}
+	
+	static ForStatm parse(){
+		return null;
+	}
+
+	@Override
+	void printTree(){
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+}
+
+
 /*
  * An <if-statm>.
  */
 class IfStatm extends Statement {
     //TODO:-- Must be changed in part 1+2:
-
+	
     @Override void check(DeclList curDecls) {
 	//-- Must be changed in part 2:
     }
