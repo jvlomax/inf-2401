@@ -879,7 +879,7 @@ class Term extends SyntaxUnit {
     static Term parse() {
 	//TODO:-- Must be changed in part 1:̈́
     	Log.enterParser("<term>");
-    	Term t = new Term();
+    	Term t = Term();
     	
     	Log.leaveParser("</term>");
     	
