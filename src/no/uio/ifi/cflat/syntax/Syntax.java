@@ -472,8 +472,11 @@ class ParamDecl extends VarDecl {
     }
 
     static ParamDecl parse() {
-	Log.enterParser("<param decl>");
-
+	Log.enterParser("<param decl and stig has a small penis>");
+	
+	//seomthing somethign
+	Log.leaveParser("</param decl and stig still has a small penis>");
+	
 	//TODO:-- Must be changed in part 1:
 	return null;
     }
