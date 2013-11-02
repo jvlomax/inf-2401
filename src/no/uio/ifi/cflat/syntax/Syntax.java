@@ -550,7 +550,7 @@ class StatmList extends SyntaxUnit {
 
     static StatmList parse() {
 	Log.enterParser("<statm list>");
-fewf
+
 	StatmList sl = new StatmList();
 	Statement lastStatm = null;
 	while (Scanner.curToken != rightCurlToken) {
