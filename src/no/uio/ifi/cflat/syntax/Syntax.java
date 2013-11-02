@@ -833,8 +833,14 @@ class Term extends SyntaxUnit {
     }
 
     static Term parse() {
-	//TODO:-- Must be changed in part 1:
-	return null;
+	//TODO:-- Must be changed in part 1:̈́
+    	Log.enterParser("<term>");
+    	Term t = Term();
+    	
+    	Log.leaveParser("</term>");
+    	
+    	
+	return null;|
     }
 
     @Override void printTree() {
@@ -906,12 +912,12 @@ class RelOperator extends Operator {
     @Override void printTree() {
 	String op = "?";
 	switch (opToken) {
-	case equalToken:        op = "==";  break;
-	case notEqualToken:     op = "!=";  break;
-	case lessToken:         op = "<";   break;
-	case lessEqualToken:    op = "<=";  break;
-	case greaterToken:      op = ">";   break;
-	case greaterEqualToken: op = ">=";  break;
+		case equalToken:        op = "==";  break;
+		case notEqualToken:     op = "!=";  break;
+		case lessToken:         op = "<";   break;
+		case lessEqualToken:    op = "<=";  break;
+		case greaterToken:      op = ">";   break;
+		case greaterEqualToken: op = ">=";  break;
 	}
 	Log.wTree(" " + op + " ");
     }
@@ -1037,6 +1043,28 @@ class Variable extends Operand {
     static Variable parse() {
 	Log.enterParser("<variable>");
 	//TODO:-- Must be changed in part 1:
+	Log.enterParser("<variable>");
+	
+	
+	
+	Variable v = new Variable();
+	Scanner.readNext();
+	v.varName = Scanner.curToken.toString();
+	Scanner.readNext();
+	
+	
+	
+	WhileStatm ws = new WhileStatm();
+	Scanner.readNext();
+	Scanner.skip(leftParToken);
+	ws.test = Expression.parse();
+	Scanner.skip(rightParToken);
+	Scanner.skip(leftCurlToken);
+	ws.body = StatmList.parse();
+	Scanner.skip(rightCurlToken);
+	
+	
+	Log.leaveParser("</variable>");
 	return null;
     }
 
