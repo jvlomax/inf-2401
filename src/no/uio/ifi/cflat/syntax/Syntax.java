@@ -616,6 +616,7 @@ abstract class Statement extends SyntaxUnit {
 
 
 class AssignStatm extends Statement{
+    Assignment a = null;
 
 	@Override
 	void check(DeclList curDecls){
@@ -629,13 +630,18 @@ class AssignStatm extends Statement{
 		
 	}
 	static AssignStatm parse(){
-		return null;
+        Log.enterParser("<assign-statm>");
+        AssignStatm as = new AssignStatm();
+        as.a = Assignment.parse();
+        Scanner.skip(semicolonToken);
+        Log.leaveParser("</assign-statm");
+		return as;
 	}
 
 	@Override
 	void printTree(){
 		// TODO Auto-generated method stub
-		
+        a.printTree(); Log.wTreeLn(";");
 	}
 	
 }
@@ -671,8 +677,6 @@ class CallStatm extends Statement{
         fc.printTree();
         Log.wTreeLn(";");
 	}
-	
-	
 }
 
 /*
@@ -1027,7 +1031,7 @@ class Term extends SyntaxUnit {
     static Term parse() {
 	//TODO:-- Must be changed in part 1:̈́
     	Log.enterParser("<term>");
-    	Term t = Term();
+    	Term t = new Term();
     	
     	Log.leaveParser("</term>");
     	
@@ -1152,6 +1156,8 @@ abstract class Operand extends SyntaxUnit {
  * A <function call>.
  */
 class FunctionCall extends Operand {
+    Name name;
+    ExprList expList;
     //TODO:-- Must be changed in part 1+2:
 
     @Override void check(DeclList curDecls) {
@@ -1165,14 +1171,21 @@ class FunctionCall extends Operand {
     static FunctionCall parse() {    	
 	//TODO:-- Must be changed in part 1:
     	Log.enterParser("<Function call>");
-    	
-    	
+        FunctionCall fc = new FunctionCall();
+        fc.name = Name.parse();
+        Scanner.skip(rightParToken);
+        fc.expList = ExprList.parse();
+        Scanner.skip(leftParToken);    	
     	Log.leaveParser("</function call>");
-	return null;
+	   return fc;
     }
 
     @Override void printTree() {
 	//TODO:-- Must be changed in part 1:
+        name.printTree(); 
+        Log.wTree("("); 
+        expList.printTree();
+        Log.wTreeLn(")");
     }
     //TODO:-- Must be changed in part 1+2:
 }
@@ -1194,13 +1207,45 @@ class Number extends Operand {
 
     static Number parse() {
 	//TODO:-- Must be changed in part 1:
+        Number number = new Number();
     	Log.enterParser("<number>");
+        number.numVal = Scanner.curNum;
+        Scanner.readNext();
     	Log.leaveParser("</number>");
-	return null;
+	return number;
     }
 
      @Override void printTree() {
 	Log.wTree("" + numVal);
+    }
+}
+
+/*
+ * A <name>.
+ */
+class Name extends Operand {
+    String nameVal;
+
+   @Override void check(DeclList curDecls) {
+       //-- Must be changed in part 2:
+    }
+    
+    @Override void genCode(FuncDecl curFunc) {
+     
+    }
+
+    static Name parse() {
+    //TODO:-- Must be changed in part 1:
+        Name name = new Name();
+        Log.enterParser("<name>");
+        name.nameVal = Scanner.curName;
+        Scanner.readNext();
+        Log.leaveParser("</name>");
+    return name;
+    }
+
+     @Override void printTree() {
+    Log.wTree("" + nameVal);
     }
 }
 
