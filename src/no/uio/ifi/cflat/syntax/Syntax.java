@@ -628,6 +628,9 @@ class AssignStatm extends Statement{
 		// TODO Auto-generated method stub
 		
 	}
+	static AssignStatm parse(){
+		return null;
+	}
 
 	@Override
 	void printTree(){
@@ -651,6 +654,11 @@ class CallStatm extends Statement{
 		
 	}
 
+	static CallStatm parse(){
+		return null;
+	}
+
+	
 	@Override
 	void printTree(){
 		// TODO Auto-generated method stub
