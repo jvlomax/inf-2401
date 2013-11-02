@@ -537,7 +537,7 @@ class FuncDecl extends Declaration {
  * A <statm list>.
  */
 class StatmList extends SyntaxUnit {
-    //TODO:-- Must be changed in part 1:
+    //-- Must be changed in part 1:
     Statement firstStatm = null;
 
     @Override void check(DeclList curDecls) {
@@ -554,7 +554,7 @@ class StatmList extends SyntaxUnit {
 	StatmList sl = new StatmList();
 	Statement lastStatm = null;
 	while (Scanner.curToken != rightCurlToken) {
-	    //TODO:-- Must be changed in part 1:
+	    //-- Must be changed in part 1:
         if (sl.firstStatm == null) {
             lastStatm = sl.firstStatm = Statement.parse();
         }else {
@@ -567,7 +567,7 @@ class StatmList extends SyntaxUnit {
     }
 
     @Override void printTree() {
-	//TODO:-- Must be changed in part 1:
+	//-- Must be changed in part 1:
     Statement curStatm = firstStatm;
     while(curStatm.nextStatm != null)
         curStatm.printTree();
@@ -590,9 +590,10 @@ abstract class Statement extends SyntaxUnit {
 	if (Scanner.curToken==nameToken && 
 	    Scanner.nextToken==leftParToken) {
 	    //TODO:-- Must be changed in part 1:
+        s = CallStatm.parse();
 	} else if (Scanner.curToken == nameToken) {
 	    //-- Must be changed in part 1:
-		s = NameStatm.parse();
+		s = AssignStatm.parse();
 	} else if (Scanner.curToken == forToken) {
 	    //-- Must be changed in part 1:
 		s = ForStatm.parse();
