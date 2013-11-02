@@ -741,7 +741,10 @@ class ForStatm extends Statement {
  * An <if-statm>.
  */
 class IfStatm extends Statement {
-    //TODO:-- Must be changed in part 1+2:
+    Expression e;
+    StatmList sl;
+    ElsePart ep = null;
+	//:-- Must be changed in part 1+2:
 	
     @Override void check(DeclList curDecls) {
 	//-- Must be changed in part 2:
@@ -753,7 +756,23 @@ class IfStatm extends Statement {
 
     static IfStatm parse() {
 	//:-- Must be changed in part 1:
-	return null;
+    	Log.enterParser("<if-statm>");
+    	IfStatm is = new IfStatm(); 
+    	Scanner.skip(leftParToken);
+    	is.e = Expression.parse();
+    	Scanner.skip(rightParToken);
+    	Scanner.skip(leftBracketToken);
+    	is.sl = StatmList.parse();
+    	Scanner.skip(rightBracketToken);
+    	// might be next token, but should be cur token
+    	if (Scanner.curToken == elseToken){
+    		is.ep = ElsePart.parse();
+    		
+    	}
+    	
+    	Log.leaveParser("</if-statm>");
+    	
+    	return is;
     }
 
     @Override void printTree() {
@@ -761,6 +780,40 @@ class IfStatm extends Statement {
     }
 }
 
+class ElsePart extends Statement{
+	StatmList sl;
+
+
+	@Override
+	void check(DeclList curDecls){
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void genCode(FuncDecl curFunc){
+		// TODO Auto-generated method stub
+		
+	}
+
+	static ElsePart parse(){
+		Log.enterParser("<else-part>");
+		ElsePart ep = new ElsePart();
+		Scanner.skip(leftBracketToken);
+		ep.sl = StatmList.parse();
+		Scanner.skip(rightBracketToken);
+		Log.leaveParser("</else-part>");
+		return ep;
+		
+	}
+	
+	@Override
+	void printTree(){
+		// TODO Auto-generated method stub
+		
+	}
+	
+}
 
 /*
  * A <return-statm>.
