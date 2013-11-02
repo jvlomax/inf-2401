@@ -4,33 +4,14 @@ package no.uio.ifi.cflat.syntax;
  * module Syntax
  */
 
-import static no.uio.ifi.cflat.scanner.Token.eofToken;
-import static no.uio.ifi.cflat.scanner.Token.forToken;
-import static no.uio.ifi.cflat.scanner.Token.ifToken;
-import static no.uio.ifi.cflat.scanner.Token.leftBracketToken;
-import static no.uio.ifi.cflat.scanner.Token.leftCurlToken;
-import static no.uio.ifi.cflat.scanner.Token.leftParToken;
-import static no.uio.ifi.cflat.scanner.Token.nameToken;
-import static no.uio.ifi.cflat.scanner.Token.numberToken;
-import static no.uio.ifi.cflat.scanner.Token.returnToken;
-import static no.uio.ifi.cflat.scanner.Token.rightCurlToken;
-import static no.uio.ifi.cflat.scanner.Token.rightParToken;
-import static no.uio.ifi.cflat.scanner.Token.semicolonToken;
-import static no.uio.ifi.cflat.scanner.Token.whileToken;
 import no.uio.ifi.cflat.cflat.Cflat;
 import no.uio.ifi.cflat.code.Code;
 import no.uio.ifi.cflat.error.Error;
 import no.uio.ifi.cflat.log.Log;
 import no.uio.ifi.cflat.scanner.Scanner;
 import no.uio.ifi.cflat.scanner.Token;
-import no.uio.ifi.cflat.syntax.AssignStatm.EmptyStatm;
-import no.uio.ifi.cflat.syntax.AssignStatm.ForStatm;
-import no.uio.ifi.cflat.syntax.AssignStatm.IfStatm;
-import no.uio.ifi.cflat.syntax.AssignStatm.ReturnStatm;
-import no.uio.ifi.cflat.syntax.AssignStatm.WhileStatm;
-import no.uio.ifi.cflat.types.ArrayType;
-import no.uio.ifi.cflat.types.Type;
-import no.uio.ifi.cflat.types.Types;
+import static no.uio.ifi.cflat.scanner.Token.*;
+import no.uio.ifi.cflat.types.*;
 
 /*
  * Creates a syntax tree by parsing; 
@@ -574,8 +555,8 @@ class StatmList extends SyntaxUnit {
 	Statement lastStatm = null;
 	while (Scanner.curToken != rightCurlToken) {
 	    //TODO:-- Must be changed in part 1:
-        if (sl.firstStatm == null) {
-            lastStatm = sl.firstStatm = Statement.parse();
+        if (!firstStatm) {
+            lastStatm = firstStatm = Statement.parse();
         }else {
             lastStatm = lastStatm.nextStatm = Statement.parse();
         }
@@ -587,10 +568,7 @@ class StatmList extends SyntaxUnit {
 
     @Override void printTree() {
 	//TODO:-- Must be changed in part 1:
-    Statement curStatm = firstStatm;
-    while(curStatm.nextStatm != null)
-        curStatm.printTree();
-        curStatm = curStatm.nextStatm;
+
     }
 }
 
@@ -633,48 +611,7 @@ abstract class Statement extends SyntaxUnit {
 }
 
 
-class CallStatm extends Statement {
 
-	@Override
-	void check(DeclList curDecls){
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	void genCode(FuncDecl curFunc){
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	void printTree(){
-		// TODO Auto-generated method stub
-		
-	}
-	
-}
-
-
-class AssignStatm extends Statement{
-	@Override
-	void check(DeclList curDecls){
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	void genCode(FuncDecl curFunc){
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	void printTree(){
-		// TODO Auto-generated method stub
-		
-	}
-}
 
 /*
  * An <empty statm>.
@@ -938,7 +875,7 @@ class Term extends SyntaxUnit {
     static Term parse() {
 	//TODO:-- Must be changed in part 1:̈́
     	Log.enterParser("<term>");
-    	Term t = new Term();
+    	Term t = Term();
     	
     	Log.leaveParser("</term>");
     	
@@ -1146,10 +1083,10 @@ class Variable extends Operand {
     static Variable parse() {
 	Log.enterParser("<variable>");
 	//TODO:-- Must be changed in part 1:
+	Log.enterParser("<variable>");
 	
 	
 	
-	//Probably not
 	Variable v = new Variable();
 	Scanner.readNext();
 	v.varName = Scanner.curToken.toString();
