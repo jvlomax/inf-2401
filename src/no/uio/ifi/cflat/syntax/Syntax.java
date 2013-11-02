@@ -615,7 +615,50 @@ abstract class Statement extends SyntaxUnit {
 }
 
 
+class AssignStatm extends Statement{
 
+	@Override
+	void check(DeclList curDecls){
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void genCode(FuncDecl curFunc){
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void printTree(){
+		// TODO Auto-generated method stub
+		
+	}
+	
+}
+
+class CallStatm extends Statement{
+
+	@Override
+	void check(DeclList curDecls){
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void genCode(FuncDecl curFunc){
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void printTree(){
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+}
 
 /*
  * An <empty statm>.

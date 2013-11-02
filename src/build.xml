@@ -8,7 +8,7 @@
 
   <target name="compile" description="Kompiler Java-programmet">
     <mkdir dir="classes"/>
-    <javac srcdir="." destdir="classes"/>
+    <javac target="1.7" srcdir="." destdir="classes"/>
   </target>
 
   <target name="jar" depends="compile" description="Lag en JAR-fil">
