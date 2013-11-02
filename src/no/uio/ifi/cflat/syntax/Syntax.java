@@ -641,6 +641,7 @@ class AssignStatm extends Statement{
 }
 
 class CallStatm extends Statement{
+    FunctionCall fc = null;
 
 	@Override
 	void check(DeclList curDecls){
@@ -655,14 +656,20 @@ class CallStatm extends Statement{
 	}
 
 	static CallStatm parse(){
-		return null;
+		Log.enterParser("<call-statm>");
+        CallStatm cs = new CallStatm();
+        cs.fc = FunctionCall.parse();
+        Scanner.skip(semicolonToken);
+        Log.leaveParser("</call-statm>");
+        return cs;
 	}
 
 	
 	@Override
 	void printTree(){
 		// TODO Auto-generated method stub
-		
+        fc.printTree();
+        Log.wTreeLn(";");
 	}
 	
 	
@@ -875,6 +882,43 @@ class ExprList extends SyntaxUnit {
     //TODO:-- Must be changed in part 1:
 }
 
+
+/*
+ * An <Assignment> Added in part 1.
+ */
+
+class Assignment extends SyntaxUnit {
+    Variable variable = null;
+    Expression exp = null;
+
+    @Override void check(DeclList curDecls) {
+    //-- Must be changed in part 2:
+    }
+
+    @Override void genCode(FuncDecl curFunc) {
+    //-- Must be changed in part 2:
+    }
+
+
+    static Assignment parse() {
+    Log.enterParser("<assignment>");
+
+    Assignment a = new Assignment();
+    Scanner.readNext();
+    a.variable = Variable.parse();
+    Scanner.skip(assignToken);
+    a.exp = Expression.parse();
+    Scanner.readNext();
+
+    Log.leaveParser("</assignment>");
+
+    return a;
+    }
+
+    @Override void printTree() {
+        variable.printTree();  Log.wTree("=");  exp.printTree();
+    }
+}
 
 /*
  * An <expression>
