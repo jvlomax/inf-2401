@@ -287,11 +287,12 @@ abstract class VarDecl extends Declaration {
     @Override int declSize() {
 	return type.size();
     }
-
+    	
     @Override void checkWhetherFunction(int nParamsUsed, SyntaxUnit use) {
 	Syntax.error(use, name + " is a variable and no function!");
     }
 	
+    
     @Override void printTree() {
 	Log.wTree(type.typeName() + " " + name);
 	Log.wTreeLn(";");
@@ -489,7 +490,9 @@ class ParamDecl extends VarDecl {
  */
 class FuncDecl extends Declaration {
     //TODO:-- Must be changed in part 1+2:
-	
+	Type type;
+	Name name;
+	ParamDecl
     FuncDecl(String n) {
 	// Used for user functions:
 
@@ -523,7 +526,12 @@ class FuncDecl extends Declaration {
     }
 
     static FuncDecl parse() {
-	//TODO:-- Must be changed in part 1:
+    	//-- Must be changed in part 1:
+    	Log.enterParser("<func decl>");
+    	FuncDecl fd = new FuncDecl("func");
+    	
+    	
+    
 	return null;
     }
 
