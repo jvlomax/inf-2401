@@ -574,8 +574,8 @@ class StatmList extends SyntaxUnit {
 	Statement lastStatm = null;
 	while (Scanner.curToken != rightCurlToken) {
 	    //TODO:-- Must be changed in part 1:
-        if (!firstStatm) {
-            lastStatm = firstStatm = Statement.parse();
+        if (sl.firstStatm == null) {
+            lastStatm = sl.firstStatm = Statement.parse();
         }else {
             lastStatm = lastStatm.nextStatm = Statement.parse();
         }
@@ -587,7 +587,10 @@ class StatmList extends SyntaxUnit {
 
     @Override void printTree() {
 	//TODO:-- Must be changed in part 1:
-
+    Statement curStatm = firstStatm;
+    while(curStatm.nextStatm != null)
+        curStatm.printTree();
+        curStatm = curStatm.nextStatm;
     }
 }
 
@@ -935,7 +938,7 @@ class Term extends SyntaxUnit {
     static Term parse() {
 	//TODO:-- Must be changed in part 1:̈́
     	Log.enterParser("<term>");
-    	Term t = Term();
+    	Term t = new Term();
     	
     	Log.leaveParser("</term>");
     	
