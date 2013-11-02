@@ -164,14 +164,15 @@ class GlobalDeclList extends DeclList {
 	GlobalDeclList gdl = new GlobalDeclList();
 
 	while (Token.isTypeName(Scanner.curToken)) {
-	    if (Scanner.nextToken == nameToken) {
-		if (Scanner.nextNextToken == leftParToken) {
-		    gdl.addDecl(FuncDecl.parse());
-		} else if (Scanner.nextNextToken == leftBracketToken) {
-		    gdl.addDecl(GlobalArrayDecl.parse());
-		} else {
+	   if (Scanner.nextToken == nameToken) {
+	       if (Scanner.nextNextToken == leftParToken) {
+	           gdl.addDecl(FuncDecl.parse());
+	       } else if (Scanner.nextNextToken == leftBracketToken) {
+	           gdl.addDecl(GlobalArrayDecl.parse());
+	       } else {
 		    //TODO:-- Must be changed in part 1:
-		}
+                gdl.addDecl(GlobalSimpleVarDecl.parse());
+           }
 	    } else {
 		Error.expected("A declaration");
 	    }
@@ -472,8 +473,11 @@ class ParamDecl extends VarDecl {
     }
 
     static ParamDecl parse() {
-	Log.enterParser("<param decl>");
-
+	Log.enterParser("<param decl and stig has a small penis>");
+	
+	//seomthing somethign
+	Log.leaveParser("</param decl and stig still has a small penis>");
+	
 	//TODO:-- Must be changed in part 1:
 	return null;
     }
@@ -534,6 +538,7 @@ class FuncDecl extends Declaration {
  */
 class StatmList extends SyntaxUnit {
     //TODO:-- Must be changed in part 1:
+    Statement firstStatm = null;
 
     @Override void check(DeclList curDecls) {
 	//-- Must be changed in part 2:
@@ -550,6 +555,11 @@ class StatmList extends SyntaxUnit {
 	Statement lastStatm = null;
 	while (Scanner.curToken != rightCurlToken) {
 	    //TODO:-- Must be changed in part 1:
+        if (!firstStatm) {
+            lastStatm = firstStatm = Statement.parse();
+        }else {
+            lastStatm = lastStatm.nextStatm = Statement.parse();
+        }
 	}
 
 	Log.leaveParser("</statm list>");
@@ -558,8 +568,10 @@ class StatmList extends SyntaxUnit {
 
     @Override void printTree() {
 	//TODO:-- Must be changed in part 1:
+
     }
 }
+
 
 
 /*
@@ -868,7 +880,7 @@ class Term extends SyntaxUnit {
     	Log.leaveParser("</term>");
     	
     	
-	return null;|
+	return null;
     }
 
     @Override void printTree() {
