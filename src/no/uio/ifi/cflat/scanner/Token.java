@@ -43,7 +43,8 @@ public enum Token {
     }
 
     public static boolean isTypeName(Token t) {
+
     	System.out.print("isTypeName token: " + t);
-	return false;
+	   return true;
     }
 }

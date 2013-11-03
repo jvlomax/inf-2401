@@ -25,6 +25,9 @@ public class Syntax {
 
     public static void init() {
 	//TODO:-- Must be changed in part 1:
+    Scanner.readNext();
+    Scanner.readNext();
+    Scanner.readNext();
     }
 
     public static void finish() {
@@ -162,8 +165,8 @@ class GlobalDeclList extends DeclList {
 
     static GlobalDeclList parse() {
 	GlobalDeclList gdl = new GlobalDeclList();
-
 	while (Token.isTypeName(Scanner.curToken)) {
+        System.out.println("LOL");
 	   if (Scanner.nextToken == nameToken) {
 	       if (Scanner.nextNextToken == leftParToken) {
 	           gdl.addDecl(FuncDecl.parse());
@@ -203,13 +206,39 @@ class LocalDeclList extends DeclList {
  * (This class is not mentioned in the syntax diagrams.)
  */
 class ParamDeclList extends DeclList {
+    ParamDecl firstDecl = null;
     @Override void genCode(FuncDecl curFunc) {
 	//-- Must be changed in part 2:
     }
 
     static ParamDeclList parse() {
-	//TODO:-- Must be changed in part 1:
-	return null;
+	    //TODO:-- Must be changed in part 1:
+        ParamDeclList paraDeclList = new ParamDeclList();
+        Log.enterParser("<paramDecl list>");
+
+    
+        ParamDecl lastParamDecl = null;
+        while (Scanner.curToken != rightParToken) {
+            if (paraDeclList.firstDecl == null) {
+                lastParamDecl = paraDeclList.firstDecl = ParamDecl.parse();
+            }else {
+                lastParamDecl = lastParamDecl.next = ParamDecl.parse();
+            if(Scanner.curToken == commaToken){
+                Scanner.skip(commaToken);
+            }
+        }
+    }
+
+        Log.leaveParser("</paramDecl list>");
+	    return paraDeclList;
+    }
+
+    @Override void printTree() {
+    //-- Must be changed in part 1:
+    ParamDecl curParamDecl = firstDecl;
+    while(curParamDecl.next != null)
+        curParamDecl.printTree();
+        curParamDecl = curParamDecl.next;
     }
 }
 
@@ -452,6 +481,9 @@ class LocalSimpleVarDecl extends VarDecl {
  */
 class ParamDecl extends VarDecl {
     int paramNum = 0;
+    Type type = null;
+    Name name = null;
+    ParamDecl next = null;
 
     ParamDecl(String n) {
 	super(n);
@@ -474,13 +506,15 @@ class ParamDecl extends VarDecl {
     }
 
     static ParamDecl parse() {
-	Log.enterParser("<param decl and stig has a small penis>");
+    //-- Must be changed in part 1:
+	Log.enterParser("<param decl>");
+	ParamDecl paramDecl = new ParamDecl(Scanner.nextName);
+    paramDecl.type = Types.getType(Scanner.curToken);
+    Scanner.readNext();
+    paramDecl.name = Name.parse();
+	Log.leaveParser("</param decl>");
 	
-	//seomthing somethign
-	Log.leaveParser("</param decl and stig still has a small penis>");
-	
-	//TODO:-- Must be changed in part 1:
-	return null;
+	return paramDecl;
     }
 }
 
@@ -490,9 +524,10 @@ class ParamDecl extends VarDecl {
  */
 class FuncDecl extends Declaration {
     //TODO:-- Must be changed in part 1+2:
-	Type type;
-	Name name;
-	ParamDecl
+	Type type = null;
+	Name name = null;
+	ParamDeclList paraDeclList = null;
+    FuncBody funcBody = null;
     FuncDecl(String n) {
 	// Used for user functions:
 
@@ -526,17 +561,65 @@ class FuncDecl extends Declaration {
     }
 
     static FuncDecl parse() {
+        System.out.println("FuncDecl: Parse");
     	//-- Must be changed in part 1:
     	Log.enterParser("<func decl>");
-    	FuncDecl fd = new FuncDecl("func");
-    	
-    	
-    
-	return null;
+        FuncDecl funcDecl = new FuncDecl(Scanner.nextName);
+        funcDecl.type = Types.getType(Scanner.curToken);
+        Scanner.readNext();
+        funcDecl.name = Name.parse();
+        Scanner.readNext();
+        Scanner.skip(leftParToken);
+        funcDecl.paraDeclList = ParamDeclList.parse();
+        Scanner.skip(rightParToken);
+        funcDecl.funcBody = FuncBody.parse();
+        Log.leaveParser("</func decl>");
+	    return funcDecl;
     }
 
     @Override void printTree() {
 	//TODO:-- Must be changed in part 1:
+        Log.wTree(type.typeName()); 
+        name.printTree();
+        Log.wTree("(");
+        paraDeclList.printTree();
+        Log.wTree(")");
+        funcBody.printTree();
+    }
+}
+
+class FuncBody extends SyntaxUnit {
+    LocalDeclList localDeclList = null;
+    StatmList statmList = null;
+
+    @Override void check(DeclList curDecls) {
+    //-- Must be changed in part 2:
+    }
+
+    @Override void genCode(FuncDecl curFunc) {
+    //-- Must be changed in part 2:
+    }
+
+    static FuncBody parse() {
+    //TODO:-- Must be changed in part 1:
+    Log.enterParser("<func body>");
+    FuncBody funcBody = new FuncBody();
+    Scanner.skip(leftCurlToken);
+    funcBody.localDeclList = LocalDeclList.parse();
+    funcBody.statmList = StatmList.parse();
+    Scanner.skip(rightCurlToken);
+    Log.leaveParser("</func body>");
+    return funcBody;
+    }
+
+    @Override void printTree() {
+    //TODO:-- Must be changed in part 1:
+    Log.wTreeLn("{");
+    Log.indentTree();
+    localDeclList.printTree();
+    statmList.printTree();
+    Log.outdentTree();
+    Log.wTreeLn("}");
     }
 }
 
@@ -1014,6 +1097,8 @@ class ExprList extends SyntaxUnit {
     }
     //TODO:-- Must be changed in part 1:
 }
+
+
 
 
 /*

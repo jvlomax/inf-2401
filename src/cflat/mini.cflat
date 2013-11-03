@@ -4,14 +4,5 @@
 /* one line comment */
 int main ()
 {
-/* multi
- * line
- * comment */
     putchar('x');
-    g = 4;
-    c = g + -4;
-    b = -3;
-    a = b - -4;
-    g = d - 3;
-    g = d - a;
 }
