@@ -228,7 +228,7 @@ class ParamDeclList extends DeclList {
     static ParamDeclList parse() {
 	    //TODO:-- Must be changed in part 1:
         ParamDeclList paraDeclList = new ParamDeclList();
-        Log.enterParser("<paramDecl list>");
+        //Log.enterParser("<paramDecl list>");
 
     
         ParamDecl lastParamDecl = null;
@@ -243,7 +243,7 @@ class ParamDeclList extends DeclList {
         }
     }
 
-        Log.leaveParser("</paramDecl list>");
+        //Log.leaveParser("</paramDecl list>");
 	    return paraDeclList;
     }
 
@@ -1482,10 +1482,10 @@ class Name extends Operand {
     static Name parse() {
     //TODO:-- Must be changed in part 1:
         Name name = new Name();
-        Log.enterParser("<name>");
+        //Log.enterParser("<name>");
         name.nameVal = Scanner.curName;
         Scanner.readNext();
-        Log.leaveParser("</name>");
+        //Log.leaveParser("</name>");
     return name;
     }
 
