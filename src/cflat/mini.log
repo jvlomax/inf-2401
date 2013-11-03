@@ -3,6 +3,35 @@
 3: # A minimal Cb program!
 4: /* one line comment */
 5: int main ()  
+Parser: <program>
+Parser: <func decl>
+Parser: <name>
 6: {  
+Parser: </name>
 7:     putchar('x');  
+Parser: <paramDecl list>
+Parser: </paramDecl list>
+Parser: <func body>
+Parser: <statm list>
+Parser: <statement>
+Parser: <call-statm>
+Parser: <Function call>
+Parser: <name>
+Parser: </name>
+Parser: <expr list>
+Parser: <expression>
+Parser: <term>
+Parser: <factor>
+Parser: <operand>
+Parser: <number>
 8: }  
+Parser: </number>
+Parser: </operand>
+Parser: </factor>
+Parser: </term>
+Parser: </expression>
+Parser: <expression>
+Parser: <term>
+Parser: <factor>
+Parser: <operand>
+Cb error in line 7: An operand expected, but found a semicolonToken!
