@@ -58,7 +58,7 @@ public class Log {
 	if (! doLogParser) return;
 	Log.parseLevel ++;
 	char[] tabs = new char[Log.parseLevel];
-	Arrays.fill(tabs, '\t');
+	Arrays.fill(tabs, ' ');
 	String tabsString = new String(tabs);
 	Log.writeLogLine("Parser: " + tabsString +  symbol);
 
@@ -70,7 +70,7 @@ public class Log {
 	if (! doLogParser) return;
 		Log.parseLevel --;
 		char[] tabs = new char[Log.parseLevel];
-		Arrays.fill(tabs, '\t');
+		Arrays.fill(tabs, ' ');
 		String tabsString = new String(tabs);
 		Log.writeLogLine("Parser: " + tabsString +  symbol);
 	
