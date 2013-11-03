@@ -83,18 +83,17 @@ public class CharGenerator {
 	public static void readNext() {
 		curC = nextC;
 		if(sourcePos == 0){
-			System.out.print("TEST: " + sourceLine + "\n");
+			System.out.println(sourceLine);
 			Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
 		}
 		if (sourcePos < sourceLine.length()) {
 			nextC = sourceLine.charAt(sourcePos);
 			sourcePos += 1;
 		} else {
-			System.out.print("New line\n");
 			try {
 				sourceLine = sourceFile.readLine();
 				sourceLine += "  ";
-				System.out.print("New Line: " + sourceLine);
+				System.out.println(sourceLine);
 				Log.noteSourceLine(sourceFile.getLineNumber(), sourceLine);
 
 			} catch (IOException e) {

@@ -9,53 +9,12 @@ Scanner: leftParToken
 Scanner: righParToken
 6: {  
 Scanner: leftCurlToken
-7: /* multi  
-8:  * line  
-9:  * comment */  
-10:     putchar('x');  
+7:     putchar('x');  
 Scanner: nameToken putchar
 Scanner: leftParToken
 Scanner: numberToken 120
 Scanner: righParToken
 Scanner: semicolonToken
-11:     g = 4;  
-Scanner: nameToken g
-Scanner: assignToken
-Scanner: numberToken 4
-Scanner: semicolonToken
-12:     c = g + -4;  
-Scanner: nameToken c
-Scanner: assignToken
-Scanner: nameToken g
-Scanner: addToken
-Scanner: numberToken -4
-Scanner: semicolonToken
-13:     b = -3;  
-Scanner: nameToken b
-Scanner: assignToken
-Scanner: numberToken -3
-Scanner: semicolonToken
-14:     a = b - -4;  
-Scanner: nameToken a
-Scanner: assignToken
-Scanner: nameToken b
-Scanner: subtractToken
-Scanner: numberToken -4
-Scanner: semicolonToken
-15:     g = d - 3;  
-Scanner: nameToken g
-Scanner: assignToken
-Scanner: nameToken d
-Scanner: subtractToken
-Scanner: numberToken 3
-Scanner: semicolonToken
-16:     g = d - a;  
-Scanner: nameToken g
-Scanner: assignToken
-Scanner: nameToken d
-Scanner: subtractToken
-Scanner: nameToken a
-Scanner: semicolonToken
-17: }  
+8: }  
 Scanner: rightCurlToken
 Scanner: eofToken

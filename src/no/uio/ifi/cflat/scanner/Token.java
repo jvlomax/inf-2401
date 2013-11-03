@@ -83,6 +83,5 @@ public enum Token {
     	} else {
     		return false;
     	}
-	
     }
 }
