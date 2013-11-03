@@ -85,7 +85,7 @@ public class Log {
      */
     public static void noteSourceLine(int lineNum, String line) {
 	if (! doLogParser && ! doLogScanner || line == null) return;
-		Log.writeLogLine("   " + String.valueOf(lineNum) + ": " + line);
+		Log.writeLogLine("   " + String.valueOf(lineNum) + ": " + line.replace("\\s+$", ""));
     }
 	
     /**
