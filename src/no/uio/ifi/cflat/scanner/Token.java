@@ -24,26 +24,65 @@ public enum Token {
 
     public static boolean isFactorOperator(Token t) {
     	System.out.print("isFactorOperator token: " + t);
-	return false;
+    	switch(t){
+    	case  multiplyToken:
+    	case divideToken:	
+    		return true;
+    	default:
+    		return false;
+    	}
+	
     }
 
     public static boolean isTermOperator(Token t) {
     	System.out.print("isTermOperator token: " + t);
-	return false;
+    	if(t == addToken || t == addToken){
+    		return true;
+    	} else {
+    		return false;
+    	}
+	
     }
 
     public static boolean isRelOperator(Token t) {
     	System.out.print("isRelOperator token: " + t);
-	return false;
+    	switch(t){
+    	case greaterEqualToken:
+    	case greaterToken:
+    	case lessEqualToken:
+    	case lessToken:
+    	case equalToken:
+    	case notEqualToken:
+    		return true;
+		default:
+			return false;
+    				
+    				
+    	}
+    	
+	
     }
 
     public static boolean isOperand(Token t) {
     	System.out.print("isOperand token: " + t);
-	return false;
+    	switch(t){
+    	case numberToken:
+    	case nameToken:
+    	case leftParToken:
+    		return true;
+    	default:
+    		return false;
+    	}
     }
 
     public static boolean isTypeName(Token t) {
     	System.out.print("isTypeName token: " + t);
-	return false;
+    	
+    	if(t == intToken || t == doubleToken){
+    		return true;
+    	} else {
+    		return false;
+    	}
+	
     }
 }
