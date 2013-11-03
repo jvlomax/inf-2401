@@ -5,4 +5,4 @@
 5: int main ()  
 6: {  
 7:     putchar('x');  
-Cb error in line 7: A rightParToken expected, but found a leftParToken!
+8: }  
