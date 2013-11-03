@@ -119,10 +119,12 @@ class Program extends SyntaxUnit {
 
 abstract class DeclList extends SyntaxUnit {
     Declaration firstDecl = null;
+    Declaration lastDecl = null;
     DeclList outerScope;
 
     DeclList () {
 	//TODO:-- Must be changed in part 1:
+
     }
 
     @Override void check(DeclList curDecls) {
@@ -136,10 +138,20 @@ abstract class DeclList extends SyntaxUnit {
 
     @Override void printTree() {
 	//TODO:-- Must be changed in part 1:
+        Declaration curDecl = firstDecl;
+        while(curDecl.nextDecl != null){
+            curDecl.printTree();
+            curDecl = curDecl.nextDecl;
+        }
     }
 
     void addDecl(Declaration d) {
 	//TODO:-- Must be changed in part 1:
+        if(firstDecl == null){
+            firstDecl = lastDecl = d;
+        }else{
+            lastDecl = lastDecl.nextDecl = d;
+        }
     }
 
     int dataSize() {
@@ -166,6 +178,7 @@ class GlobalDeclList extends DeclList {
 
     static GlobalDeclList parse() {
 	GlobalDeclList gdl = new GlobalDeclList();
+    gdl.outerScope = gdl;
 	while (Token.isTypeName(Scanner.curToken)) {
 	   if (Scanner.nextToken == nameToken) {
 	       if (Scanner.nextNextToken == leftParToken) {
@@ -196,6 +209,7 @@ class LocalDeclList extends DeclList {
 
     static LocalDeclList parse() {
 	//TODO:-- Must be changed in part 1:
+
 	return null;
     }
 }
@@ -235,10 +249,11 @@ class ParamDeclList extends DeclList {
 
     @Override void printTree() {
     //-- Must be changed in part 1:
-    ParamDecl curParamDecl = firstDecl;
-    while(curParamDecl.next != null)
-        curParamDecl.printTree();
-        curParamDecl = curParamDecl.next;
+        ParamDecl curParamDecl = firstDecl;
+        while(curParamDecl.next != null){
+            curParamDecl.printTree();
+            curParamDecl = curParamDecl.next;
+        }
     }
 }
 
@@ -610,7 +625,7 @@ class FuncBody extends SyntaxUnit {
     FuncBody funcBody = new FuncBody();
     Scanner.skip(leftCurlToken);
     System.out.println("curToken before localDeclList: " + Scanner.curToken);
-    funcBody.localDeclList = LocalDeclList.parse();
+    //funcBody.localDeclList = LocalDeclList.parse();
     System.out.println("curToken before statmList: " + Scanner.curToken);
     funcBody.statmList = StatmList.parse();
     System.out.println("curToken: " + Scanner.curToken);
@@ -667,9 +682,10 @@ class StatmList extends SyntaxUnit {
     @Override void printTree() {
 	//-- Must be changed in part 1:
     Statement curStatm = firstStatm;
-    while(curStatm.nextStatm != null)
+    while(curStatm.nextStatm != null){
         curStatm.printTree();
         curStatm = curStatm.nextStatm;
+    }
     }
 }
 
@@ -688,6 +704,7 @@ abstract class Statement extends SyntaxUnit {
 	if (Scanner.curToken==nameToken && 
 	    Scanner.nextToken==leftParToken) {
 	    //TODO:-- Must be changed in part 1:
+        System.out.println("Calling CallStatm");
         s = CallStatm.parse();
 	} else if (Scanner.curToken == nameToken) {
 	    //-- Must be changed in part 1:
@@ -1091,16 +1108,41 @@ class ExprList extends SyntaxUnit {
     }
 
     static ExprList parse() {
-	Expression lastExpr = null;
+    //TODO:-- Must be changed in part 1:
 
 	Log.enterParser("<expr list>");
+    System.out.println("curToken inside ExprList: " + Scanner.curToken);
 
-	//TODO:-- Must be changed in part 1:
-	return null;
+	
+    ExprList exprList = new ExprList();
+    Expression lastExpr = null;
+    while (Scanner.curToken != rightParToken) {
+        //-- Must be changed in part 1:
+        System.out.println("while cur token: " + Scanner.curToken);
+        if (exprList.firstExpr == null) {
+            lastExpr = exprList.firstExpr = Expression.parse();
+        }else {
+            lastExpr = lastExpr.nextExpr = Expression.parse();
+        }
+        if (Scanner.curToken == commaToken) {
+            Scanner.readNext();
+        }
+    }
+
+
+    System.out.println("After exprList: " + Scanner.curToken);
+
+    Log.leaveParser("</expr list>");
+	return exprList;
     }
 
     @Override void printTree() {
 	//TODO:-- Must be changed in part 1:
+        Expression curExpre = firstExpr;
+        while(curExpre.nextExpr != null){
+            curExpre.printTree();
+            curExpre = curExpre.nextExpr;
+        }
     }
     //TODO:-- Must be changed in part 1:
 }
@@ -1164,14 +1206,15 @@ class Expression extends Operand {
 
     static Expression parse() {
 	Log.enterParser("<expression>");
-
+    System.out.println("Expression curToken: " + Scanner.curToken);
 	Expression e = new Expression();
 	e.firstTerm = Term.parse();
+    
 	if (Token.isRelOperator(Scanner.curToken)) {
 	    e.relOp = RelOperator.parse();
 	    e.secondTerm = Term.parse();
 	}
-
+    System.out.println("Done with expression");
 	Log.leaveParser("</expression>");
 	return e;
     }
@@ -1373,10 +1416,11 @@ class FunctionCall extends Operand {
 	//TODO:-- Must be changed in part 1:
     	Log.enterParser("<Function call>");
         FunctionCall fc = new FunctionCall();
+        System.out.println("CurToken Inside FunctionCall: " + Scanner.curToken + "name: " + Scanner.curName);
         fc.name = Name.parse();
-        Scanner.skip(rightParToken);
+        Scanner.skip(leftParToken);
         fc.expList = ExprList.parse();
-        Scanner.skip(leftParToken);    	
+        Scanner.skip(rightParToken);    	
     	Log.leaveParser("</function call>");
 	   return fc;
     }
