@@ -539,8 +539,6 @@ class ParamDecl extends VarDecl {
  */
 class FuncDecl extends Declaration {
     //TODO:-- Must be changed in part 1+2:
-	Type type = null;
-	Name name = null;
 	ParamDeclList paraDeclList = null;
     FuncBody funcBody = null;
     FuncDecl(String n) {
@@ -1414,7 +1412,7 @@ class FunctionCall extends Operand {
 
     static FunctionCall parse() {    	
 	//TODO:-- Must be changed in part 1:
-    	Log.enterParser("<Function call>");
+    	Log.enterParser("<function call>");
         FunctionCall fc = new FunctionCall();
         System.out.println("CurToken Inside FunctionCall: " + Scanner.curToken + "name: " + Scanner.curName);
         fc.name = Name.parse();
