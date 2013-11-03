@@ -56,13 +56,14 @@ public class Log {
     public static void enterParser(String symbol) {
 	if (! doLogParser) return;
 
-	//-- Must be changed in part 1:
+	Log.writeLogLine("Parser: " + symbol);
+	
     }
 
     public static void leaveParser(String symbol) {
 	if (! doLogParser) return;
 
-	//-- Must be changed in part 1:
+		Log.writeLogLine("Parser: " + symbol);
     }
 
     /**

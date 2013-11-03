@@ -1218,13 +1218,45 @@ class Expression extends Operand {
     }
 }
 
+class Factor extends SyntaxUnit {
+	Operand op;
+	@Override
+	void check(DeclList curDecls){
+		// TODO Auto-generated method stub
+		
+	}
 
+	@Override
+	void genCode(FuncDecl curFunc){
+		// TODO Auto-generated method stub
+		
+	}
+	static Factor parse(){
+		Log.enterParser("<factor>");
+		Factor f = new Factor();
+		f.op = Operand.parse();
+		Log.leaveParser("</factor>");
+		return f;
+			
+	}
+
+	@Override
+	void printTree(){
+		// TODO Auto-generated method stub
+		op.printTree();
+		
+	}
+	
+	
+}
 /*
  * A <term>
  */
 class Term extends SyntaxUnit {
     //TODO:-- Must be changed in part 1+2:
-
+	Factor f;
+	
+	
     @Override void check(DeclList curDecls) {
 	//-- Must be changed in part 2:
     }
@@ -1237,7 +1269,7 @@ class Term extends SyntaxUnit {
 	//TODO:-- Must be changed in part 1:̈́
     	Log.enterParser("<term>");
     	Term t = new Term();
-    	
+    	t.f = Factor.parse();
     	Log.leaveParser("</term>");
     	
     	
@@ -1245,7 +1277,8 @@ class Term extends SyntaxUnit {
     }
 
     @Override void printTree() {
-	//TODO:-- Must be changed in part 1+2:
+    	f.printTree();
+    	//-- Must be changed in part 1+2:
     }
 }
 
