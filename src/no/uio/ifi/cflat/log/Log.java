@@ -7,6 +7,7 @@ package no.uio.ifi.cflat.log;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 import no.uio.ifi.cflat.cflat.Cflat;
 import no.uio.ifi.cflat.error.Error;
@@ -56,7 +57,10 @@ public class Log {
     public static void enterParser(String symbol) {
 	if (! doLogParser) return;
 	Log.parseLevel ++;
-	Log.writeLogLine("Parser: " + symbol);
+	char[] tabs = new char[Log.parseLevel];
+	Arrays.fill(tabs, '\t');
+	String tabsString = new String(tabs);
+	Log.writeLogLine("Parser: " + tabsString +  symbol);
 
 	
 	
@@ -65,7 +69,10 @@ public class Log {
     public static void leaveParser(String symbol) {
 	if (! doLogParser) return;
 		Log.parseLevel --;
-		Log.writeLogLine("Parser: " + symbol);
+		char[] tabs = new char[Log.parseLevel];
+		Arrays.fill(tabs, '\t');
+		String tabsString = new String(tabs);
+		Log.writeLogLine("Parser: " + tabsString +  symbol);
 	
     }
 
