@@ -1206,6 +1206,7 @@ class Factor extends SyntaxUnit {
 	@Override
 	void printTree(){
 		// TODO Auto-generated method stub
+		op.printTree();
 		
 	}
 	
@@ -1239,7 +1240,8 @@ class Term extends SyntaxUnit {
     }
 
     @Override void printTree() {
-	//TODO:-- Must be changed in part 1+2:
+    	f.printTree();
+    	//-- Must be changed in part 1+2:
     }
 }
 
