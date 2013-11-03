@@ -156,6 +156,7 @@ public class Log {
 
 
     public static void wTree(String s) {
+    System.out.println("wTree");
 	if (curTreeLine.length() == 0) {
 	    for (int i = 1;  i <= treeLevel;  ++i) curTreeLine += "  ";
 	}
@@ -163,11 +164,13 @@ public class Log {
     }
 
     public static void wTreeLn() {
+   	System.out.println("wTreeLn");
 	writeLogLine("Tree:     " + curTreeLine);
 	curTreeLine = "";
     }
 
     public static void wTreeLn(String s) {
+    System.out.println("wTreeLn(s)");
 	wTree(s);  wTreeLn();
     }
 

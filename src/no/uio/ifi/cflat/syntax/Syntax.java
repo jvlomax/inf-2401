@@ -32,6 +32,7 @@ public class Syntax {
 
     public static void finish() {
 	//TODO:-- Must be changed in part 1:
+    program.printTree();
     }
 
     public static void checkProgram() {
@@ -166,7 +167,6 @@ class GlobalDeclList extends DeclList {
     static GlobalDeclList parse() {
 	GlobalDeclList gdl = new GlobalDeclList();
 	while (Token.isTypeName(Scanner.curToken)) {
-        System.out.println("LOL");
 	   if (Scanner.nextToken == nameToken) {
 	       if (Scanner.nextNextToken == leftParToken) {
 	           gdl.addDecl(FuncDecl.parse());
@@ -568,12 +568,14 @@ class FuncDecl extends Declaration {
         funcDecl.type = Types.getType(Scanner.curToken);
         Scanner.readNext();
         funcDecl.name = Name.parse();
-        Scanner.readNext();
         Scanner.skip(leftParToken);
         funcDecl.paraDeclList = ParamDeclList.parse();
         Scanner.skip(rightParToken);
+        System.out.println("Before FuncBody");
         funcDecl.funcBody = FuncBody.parse();
+        System.out.println("After FuncBody");
         Log.leaveParser("</func decl>");
+        System.out.println("FuncDecl: DoneParse");
 	    return funcDecl;
     }
 
@@ -603,10 +605,15 @@ class FuncBody extends SyntaxUnit {
     static FuncBody parse() {
     //TODO:-- Must be changed in part 1:
     Log.enterParser("<func body>");
+    System.out.println("inside FuncBody");
+    System.out.println("curToken: " + Scanner.curToken);
     FuncBody funcBody = new FuncBody();
     Scanner.skip(leftCurlToken);
+    System.out.println("curToken before localDeclList: " + Scanner.curToken);
     funcBody.localDeclList = LocalDeclList.parse();
+    System.out.println("curToken before statmList: " + Scanner.curToken);
     funcBody.statmList = StatmList.parse();
+    System.out.println("curToken: " + Scanner.curToken);
     Scanner.skip(rightCurlToken);
     Log.leaveParser("</func body>");
     return funcBody;

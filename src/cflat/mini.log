@@ -3,18 +3,6 @@
 3: # A minimal Cb program!
 4: /* one line comment */
 5: int main ()  
-Scanner: intToken
-Scanner: nameToken main
-Scanner: leftParToken
-Scanner: righParToken
 6: {  
-Scanner: leftCurlToken
 7:     putchar('x');  
-Scanner: nameToken putchar
-Scanner: leftParToken
-Scanner: numberToken 120
-Scanner: righParToken
-Scanner: semicolonToken
-8: }  
-Scanner: rightCurlToken
-Scanner: eofToken
+Cb error in line 7: A rightParToken expected, but found a leftParToken!
