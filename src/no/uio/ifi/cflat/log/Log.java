@@ -55,15 +55,24 @@ public class Log {
 
     public static void enterParser(String symbol) {
 	if (! doLogParser) return;
-
-	Log.writeLogLine("Parser: " + symbol);
-	
+	Log.parseLevel ++;
+	Log.writeLogLine("Parser: ");
+	int i;
+	for(i = 0; i < parseLevel; i++){
+		Log.writeLogLine("\t");
+	}
+	Log.writeLogLine(symbol);
     }
 
     public static void leaveParser(String symbol) {
 	if (! doLogParser) return;
-
-		Log.writeLogLine("Parser: " + symbol);
+		Log.parseLevel --;
+		Log.writeLogLine("Parser: ");
+		int i;
+		for(i = 0; i < parseLevel; i++){
+		Log.writeLogLine("\t");
+		}
+		Log.writeLogLine(symbol);
     }
 
     /**
