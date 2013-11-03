@@ -56,23 +56,17 @@ public class Log {
     public static void enterParser(String symbol) {
 	if (! doLogParser) return;
 	Log.parseLevel ++;
-	Log.writeLogLine("Parser: ");
-	int i;
-	for(i = 0; i < parseLevel; i++){
-		Log.writeLogLine("\t");
-	}
-	Log.writeLogLine(symbol);
+	Log.writeLogLine("Parser: " + symbol);
+
+	
+	
     }
 
     public static void leaveParser(String symbol) {
 	if (! doLogParser) return;
 		Log.parseLevel --;
-		Log.writeLogLine("Parser: ");
-		int i;
-		for(i = 0; i < parseLevel; i++){
-		Log.writeLogLine("\t");
-		}
-		Log.writeLogLine(symbol);
+		Log.writeLogLine("Parser: " + symbol);
+	
     }
 
     /**
