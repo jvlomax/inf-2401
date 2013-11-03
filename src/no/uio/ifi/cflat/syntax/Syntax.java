@@ -1118,6 +1118,7 @@ class ExprList extends SyntaxUnit {
     Expression lastExpr = null;
     while (Scanner.curToken != rightParToken) {
         //-- Must be changed in part 1:
+        System.out.println("while cur token: " + Scanner.curToken);
         if (exprList.firstExpr == null) {
             lastExpr = exprList.firstExpr = Expression.parse();
         }else {
@@ -1126,6 +1127,8 @@ class ExprList extends SyntaxUnit {
         Scanner.readNext();
     }
 
+
+    System.out.println("After exprList: " + Scanner.curToken);
 
     Log.leaveParser("</expr list>");
 	return exprList;
@@ -1204,6 +1207,7 @@ class Expression extends Operand {
 
 	Expression e = new Expression();
 	e.firstTerm = Term.parse();
+    System.out.println("Expression curToken: " + Scanner.curToken);
 	if (Token.isRelOperator(Scanner.curToken)) {
 	    e.relOp = RelOperator.parse();
 	    e.secondTerm = Term.parse();
@@ -1446,7 +1450,6 @@ class Number extends Operand {
 
     static Number parse() {
 	//TODO:-- Must be changed in part 1:
-        System.out.println("ROGEOIGMOWEGN");
         Number number = new Number();
     	Log.enterParser("<number>");
         number.numVal = Scanner.curNum;
