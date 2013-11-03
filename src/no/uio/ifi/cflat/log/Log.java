@@ -36,7 +36,7 @@ public class Log {
 	try {
 	    PrintWriter log = (nLogLines==0 ? new PrintWriter(logName) :
 		new PrintWriter(new FileOutputStream(logName,true)));
-	    log.println(data.replace("\\s+$", ""));  ++nLogLines;
+	    log.println(data.trim());  ++nLogLines;
 	    log.close();
 	} catch (FileNotFoundException e) {
 	    Error.error("Cannot open log file " + logName + "!");
@@ -85,7 +85,7 @@ public class Log {
      */
     public static void noteSourceLine(int lineNum, String line) {
 	if (! doLogParser && ! doLogScanner || line == null) return;
-		Log.writeLogLine("   " + String.valueOf(lineNum) + ": " + line);
+		Log.writeLogLine("   " + String.valueOf(lineNum) + ": " + line.replace("\\s+$", ""));
     }
 	
     /**
