@@ -45,7 +45,7 @@ public enum Token {
     }
 
     public static boolean isRelOperator(Token t) {
-    	System.out.print("isRelOperator token: " + t);
+    	System.out.println("isRelOperator token: " + t);
     	switch(t){
     	case greaterEqualToken:
     	case greaterToken:

@@ -1124,7 +1124,9 @@ class ExprList extends SyntaxUnit {
         }else {
             lastExpr = lastExpr.nextExpr = Expression.parse();
         }
-        Scanner.readNext();
+        if (Scanner.curToken == commaToken) {
+            Scanner.readNext();
+        }
     }
 
 
@@ -1204,15 +1206,15 @@ class Expression extends Operand {
 
     static Expression parse() {
 	Log.enterParser("<expression>");
-
+    System.out.println("Expression curToken: " + Scanner.curToken);
 	Expression e = new Expression();
 	e.firstTerm = Term.parse();
-    System.out.println("Expression curToken: " + Scanner.curToken);
+    
 	if (Token.isRelOperator(Scanner.curToken)) {
 	    e.relOp = RelOperator.parse();
 	    e.secondTerm = Term.parse();
 	}
-
+    System.out.println("Done with expression");
 	Log.leaveParser("</expression>");
 	return e;
     }
