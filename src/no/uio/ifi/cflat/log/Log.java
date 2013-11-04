@@ -186,10 +186,14 @@ public class Log {
     }
 
     public static void indentTree() {
-	//TODO:-- Must be changed in part 1:
+    	treeLevel ++;
+
+    	//TODO:-- Must be changed in part 1:
     }
 
     public static void outdentTree() {
 	//TODO:-- Must be changed in part 1:
+    	
+    	treeLevel --;
     }
 }
