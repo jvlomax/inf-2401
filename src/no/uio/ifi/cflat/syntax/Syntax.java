@@ -236,7 +236,7 @@ class ParamDeclList extends DeclList {
             if (paraDeclList.firstDecl == null) {
                 lastParamDecl = paraDeclList.firstDecl = ParamDecl.parse();
             }else {
-                lastParamDecl = lastParamDecl.next = ParamDecl.parse();
+                lastParamDecl = lastParamDecl.nextDecl = ParamDecl.parse();
             if(Scanner.curToken == commaToken){
                 Scanner.skip(commaToken);
             }
@@ -250,9 +250,9 @@ class ParamDeclList extends DeclList {
     @Override void printTree() {
     //-- Must be changed in part 1:
         ParamDecl curParamDecl = firstDecl;
-        while(curParamDecl.next != null){
+        while(curParamDecl.nextDecl != null){
             curParamDecl.printTree();
-            curParamDecl = curParamDecl.next;
+            curParamDecl = curParamDecl.nextDecl;
         }
     }
 }
@@ -496,9 +496,7 @@ class LocalSimpleVarDecl extends VarDecl {
  */
 class ParamDecl extends VarDecl {
     int paramNum = 0;
-    Type type = null;
-    Name name = null;
-    ParamDecl next = null;
+    ParamDecl nextDecl;
 
     ParamDecl(String n) {
 	super(n);
@@ -526,7 +524,8 @@ class ParamDecl extends VarDecl {
 	ParamDecl paramDecl = new ParamDecl(Scanner.nextName);
     paramDecl.type = Types.getType(Scanner.curToken);
     Scanner.readNext();
-    paramDecl.name = Name.parse();
+    //Skip name token, since it has been added already
+    Scanner.readNext();
 	Log.leaveParser("</param decl>");
 	
 	return paramDecl;
@@ -580,7 +579,8 @@ class FuncDecl extends Declaration {
         FuncDecl funcDecl = new FuncDecl(Scanner.nextName);
         funcDecl.type = Types.getType(Scanner.curToken);
         Scanner.readNext();
-        funcDecl.name = Name.parse();
+        funcDecl.name = Scanner.curName;
+        Scanner.readNext();
         Scanner.skip(leftParToken);
         funcDecl.paraDeclList = ParamDeclList.parse();
         Scanner.skip(rightParToken);
@@ -595,7 +595,7 @@ class FuncDecl extends Declaration {
     @Override void printTree() {
 	//TODO:-- Must be changed in part 1:
         Log.wTree(type.typeName()); 
-        name.printTree();
+        Log.wTree(name);
         Log.wTree("(");
         paraDeclList.printTree();
         Log.wTree(")");
@@ -1398,7 +1398,7 @@ abstract class Operand extends SyntaxUnit {
  * A <function call>.
  */
 class FunctionCall extends Operand {
-    Name name;
+    String name;
     ExprList expList;
     //TODO:-- Must be changed in part 1+2:
 
@@ -1415,7 +1415,8 @@ class FunctionCall extends Operand {
     	Log.enterParser("<function call>");
         FunctionCall fc = new FunctionCall();
         System.out.println("CurToken Inside FunctionCall: " + Scanner.curToken + "name: " + Scanner.curName);
-        fc.name = Name.parse();
+        fc.name = Scanner.curName;
+        Scanner.readNext();
         Scanner.skip(leftParToken);
         fc.expList = ExprList.parse();
         Scanner.skip(rightParToken);    	
@@ -1425,7 +1426,7 @@ class FunctionCall extends Operand {
 
     @Override void printTree() {
 	//TODO:-- Must be changed in part 1:
-        name.printTree(); 
+        Log.wTree(name); 
         Log.wTree("("); 
         expList.printTree();
         Log.wTreeLn(")");
@@ -1463,34 +1464,34 @@ class Number extends Operand {
     }
 }
 
-/*
- * A <name>.
- */
-class Name extends Operand {
-    String nameVal;
+// /*
+//  * A <name>.
+//  */
+// class Name extends Operand {
+//     String nameVal;
 
-   @Override void check(DeclList curDecls) {
-       //-- Must be changed in part 2:
-    }
+//    @Override void check(DeclList curDecls) {
+//        //-- Must be changed in part 2:
+//     }
     
-    @Override void genCode(FuncDecl curFunc) {
+//     @Override void genCode(FuncDecl curFunc) {
      
-    }
+//     }
 
-    static Name parse() {
-    //TODO:-- Must be changed in part 1:
-        Name name = new Name();
-        //Log.enterParser("<name>");
-        name.nameVal = Scanner.curName;
-        Scanner.readNext();
-        //Log.leaveParser("</name>");
-    return name;
-    }
+//     static Name parse() {
+//     //TODO:-- Must be changed in part 1:
+//         Name name = new Name();
+//         //Log.enterParser("<name>");
+//         name.nameVal = Scanner.curName;
+//         Scanner.readNext();
+//         //Log.leaveParser("</name>");
+//     return name;
+//     }
 
-     @Override void printTree() {
-    Log.wTree("" + nameVal);
-    }
-}
+//      @Override void printTree() {
+//     Log.wTree("" + nameVal);
+//     }
+// }
 
 
 /*
