@@ -32,3 +32,5 @@ Parser:         </statm list>
 Parser:       </func body>
 Parser:     </func decl>
 Parser:   </program>
+Tree:     int main ()
+Tree:     {
