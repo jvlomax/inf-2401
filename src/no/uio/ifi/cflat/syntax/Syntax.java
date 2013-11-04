@@ -260,15 +260,19 @@ class ParamDeclList extends DeclList {
                 lastParamDecl = paraDeclList.firstDecl = ParamDecl.parse();
             }else {
                 lastParamDecl = lastParamDecl.nextDecl = ParamDecl.parse();
-            if(Scanner.curToken == commaToken){
-                Scanner.skip(commaToken);
-            }
+        	}
+            System.out.println(Scanner.curToken);
+        	if(Scanner.curToken == commaToken){
+                
+            	Scanner.skip(commaToken);
+        	}
         }
-    }
-
-        //Log.leaveParser("</paramDecl list>");
+      //Log.leaveParser("</paramDecl list>");
 	    return paraDeclList;
     }
+
+        
+    
 
     @Override void printTree() {
     //-- Must be changed in part 1:
@@ -1080,6 +1084,7 @@ class ReturnStatm extends Statement {
 		ReturnStatm rs = new ReturnStatm();
 		Scanner.readNext();
 		rs.retVal = Expression.parse();
+		System.out.println(Scanner.curName);
 		Scanner.skip(semicolonToken);
 		Log.leaveParser("</return-statm>");
 		return rs;
@@ -1182,6 +1187,7 @@ class ExprList extends SyntaxUnit {
         }
         if (Scanner.curToken == commaToken) {
             Scanner.readNext();
+            
         }
     }
 
@@ -1284,6 +1290,7 @@ class Expression extends Operand {
 
     @Override void printTree() {
         System.out.println("Expression.printTree");
+        
         firstTerm.printTree();
         System.out.println("omg");
         if (relOp != null) {
@@ -1311,16 +1318,40 @@ class FactorList extends SyntaxUnit {
 	}
 	
 	static FactorList parse(){
+		System.out.println("start of factor list parse");
 		FactorList fl = new FactorList();
 		Factor lastFactor = null;
-		while(Token.isTermOperator(Scanner.nextToken)){
-			if(fl.firstFactor == null){
-				lastFactor = fl.firstFactor = Factor.parse();
-			}else{
-				lastFactor = lastFactor.nextFactor = Factor.parse();
+	
+		if(Scanner.curToken == leftParToken){
+			while(Scanner.curToken != rightParToken){
+				if(fl.firstFactor == null){		
+					System.out.println(Scanner.nextToken);
+					lastFactor = fl.firstFactor = Factor.parse();				
+				}else{			
+					lastFactor = lastFactor.nextFactor = Factor.parse();			
+				}
+			
+			}
+		}
+		fl.firstFactor = Factor.parse();
+		
+		System.out.println(Scanner.curToken);
+		System.out.println(Scanner.nextToken);
+		Scanner.readNext();
+		while(Token.isOperand(Scanner.nextToken)){
+			
+			if(fl.firstFactor == null){		
+				System.out.println(Scanner.nextToken);
+				lastFactor = fl.firstFactor = Factor.parse();				
+			}else{			
+				lastFactor = lastFactor.nextFactor = Factor.parse();			
 			}
 			Scanner.readNext();
-			Scanner.readNext();
+		
+			
+			
+			if(Scanner.curToken != rightParToken)
+				Scanner.readNext();
 		}
 		
 		
@@ -1329,23 +1360,26 @@ class FactorList extends SyntaxUnit {
 
 	@Override
 	void printTree(){
-		firstFactor.printTree();
-		while (firstFactor.nextFactor != null){
-			firstFactor.nextFactor.printTree();
-			firstFactor.nextFactor = firstFactor.nextFactor.nextFactor;
+		System.out.println("factory list print teree");
+		if(firstFactor == null){
+			System.out.print("factor list is empty");
+			return;
 		}
 		
+		Factor curFactor = firstFactor;
+		curFactor.printTree();
+        while(curFactor.nextFactor != null){
+            curFactor = curFactor.nextFactor;
+            curFactor.printTree();
+        }
 	}
-	
-	
-	
 }
-
 class Factor extends SyntaxUnit {
 	
 	Factor nextFactor = null;
-	Operand op;
-		
+	OperandList op;
+	TermOperator term = null;
+	
 	@Override
 	void check(DeclList curDecls){
 		// TODO Auto-generated method stub
@@ -1360,8 +1394,13 @@ class Factor extends SyntaxUnit {
 	static Factor parse(){
 		Log.enterParser("<factor>");
 		Factor f = new Factor();
-		f.op = Operand.parse();	
+		f.op = OperandList.parse();	
+
 		Log.leaveParser("</factor>");
+		if(Token.isTermOperator(Scanner.nextToken)){
+			System.out.println("TERM OPERATOR");
+			f.term = TermOperator.parse();
+		}
 		return f;
 			
 	}
@@ -1395,17 +1434,21 @@ class Term extends SyntaxUnit {
     static Term parse() {
 	//TODO:-- Must be changed in part 1:̈́
     	Log.enterParser("<term>");
+    	
     	Term t = new Term();
     	t.fl = FactorList.parse();
+    
+    	
     	Log.leaveParser("</term>");
     	
     	
-	return null;
+    	return t;
     }
 
     @Override void printTree() {
-        System.out.println("Term.printTree");
-    	f.printTree();
+        
+    	System.out.println("Term.printTree");
+    	fl.printTree();
     	//-- Must be changed in part 1+2:
     }
 }
@@ -1486,6 +1529,65 @@ class RelOperator extends Operator {
     }
 }
 
+class TermOperator extends Operator {
+	static TermOperator parse() {
+	Log.enterParser("<term operator>");
+
+	TermOperator to = new TermOperator();
+	to.opToken = Scanner.curToken;
+	Scanner.readNext();
+
+	Log.leaveParser("</term operator>");
+	return to;
+    }
+
+    @Override void printTree() {
+    System.out.println("RelOperator.printTree");
+	String op = "?";
+	switch (opToken) {
+	case addToken:        	op = "+";  break;
+	case subtractToken:     op = "-";  break;
+		
+	}
+	Log.wTree(" " + op + " ");
+    }
+
+	@Override
+	void genCode(FuncDecl curFunc){
+		// TODO Auto-generated method stub
+		
+	}
+}
+
+class FactorOperator extends Operator {
+	static FactorOperator parse() {
+	Log.enterParser("<factor operator>");
+
+	FactorOperator fo = new FactorOperator();
+	fo.opToken = Scanner.curToken;
+	Scanner.readNext();
+
+	Log.leaveParser("</factor operator>");
+	return fo;
+    }
+
+    @Override void printTree() {
+    System.out.println("RelOperator.printTree");
+	String op = "?";
+	switch (opToken) {
+	case multiplyToken:   op = "*";  break;
+	case divideToken:     op = "/";  break;
+		
+	}
+	Log.wTree(" " + op + " ");
+    }
+
+	@Override
+	void genCode(FuncDecl curFunc){
+		// TODO Auto-generated method stub
+		
+	}
+}
 
 class OperandList extends SyntaxUnit{
 	Operand firstOperand;
@@ -1504,20 +1606,41 @@ class OperandList extends SyntaxUnit{
 	static OperandList parse(){
 		OperandList opl = new OperandList();
 		Operand lastOperand = null;
-		while(Token.isFactorOperator(Scanner.nextToken)){
+		System.out.println("Time to go home");
+		opl.firstOperand = Operand.parse();
+		System.out.println("really HERE!");
+		System.out.println(Scanner.curToken);
+		System.out.println(Scanner.nextToken);
+		//Scanner.readNext();
+		while(Token.isOperand(Scanner.curToken)){
+			System.out.print("WHILWHIWLHILW");
 			if(opl.firstOperand == null){
 				lastOperand = opl.firstOperand = Operand.parse();
 			}else{
 				lastOperand = lastOperand.nextOperand = Operand.parse();
 			}
 			Scanner.readNext();
-			Scanner.readNext();
+			if(Scanner.curToken != rightParToken)
+				Scanner.readNext();
+			
 		}
-		return null;
+		return opl;
 	}
 	@Override
 	void printTree(){
-		// TODO Auto-generated method stub
+		System.out.println("Opernald list preint");
+		if(firstOperand == null){
+			System.out.print("opernad list is empty");
+			return;
+		}
+		
+		Operand curOperand = firstOperand;
+		curOperand.printTree();
+        while(curOperand.nextOperand != null){
+            curOperand = curOperand.nextOperand;
+            curOperand.printTree();
+		
+        }
 		
 	}
 	
@@ -1531,7 +1654,7 @@ class OperandList extends SyntaxUnit{
 abstract class Operand extends SyntaxUnit {
     Operand nextOperand = null;
     Type valType;
-
+    FactorOperator fo = null;
     static Operand parse() {
 	Log.enterParser("<operand>");
 
@@ -1550,8 +1673,19 @@ abstract class Operand extends SyntaxUnit {
 	} else {
 	    Error.expected("An operand");
 	}
+	
 
 	Log.leaveParser("</operand>");
+	if(Token.isFactorOperator(Scanner.nextToken)){
+		System.out.println("Factor OPERATOR");
+		if(o == null){
+			System.out.println("is null");
+		}
+		o.fo = FactorOperator.parse();
+		System.out.print("After factor operator");
+		
+	}
+	Scanner.readNext();
 	return o;
     }
 }
@@ -1689,29 +1823,26 @@ class Variable extends Operand {
     static Variable parse() {
 	Log.enterParser("<variable>");
 	//TODO:-- Must be changed in part 1:
-	Log.enterParser("<variable>");
+	
 	
 	
 	
 	Variable v = new Variable();
-	Scanner.readNext();
-	v.varName = Scanner.curToken.toString();
-	Scanner.readNext();
+	
+	v.varName = Scanner.curToken.name();
+	if(Scanner.nextToken == leftBracketToken){
+		Scanner.skip(leftBracketToken);
+		v.index = Expression.parse();
+		Scanner.skip(rightBracketToken);
+	}
 	
 	
 	
-	WhileStatm ws = new WhileStatm();
-	Scanner.readNext();
-	Scanner.skip(leftParToken);
-	ws.test = Expression.parse();
-	Scanner.skip(rightParToken);
-	Scanner.skip(leftCurlToken);
-	ws.body = StatmList.parse();
-	Scanner.skip(rightCurlToken);
+	
 	
 	
 	Log.leaveParser("</variable>");
-	return null;
+	return v;
     }
 
     @Override void printTree() {

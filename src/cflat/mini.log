@@ -34,3 +34,5 @@ Parser:     </func decl>
 Parser:   </program>
 Tree:     int main ()
 Tree:     {
+Tree:       putchar(120);
+Tree:     }

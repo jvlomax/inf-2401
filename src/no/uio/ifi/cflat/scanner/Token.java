@@ -23,7 +23,7 @@ public enum Token {
     whileToken;
 
     public static boolean isFactorOperator(Token t) {
-    	System.out.print("isFactorOperator token: " + t);
+    	//System.out.print("isFactorOperator token: " + t);
     	switch(t){
     	case  multiplyToken:
     	case divideToken:	
@@ -35,8 +35,8 @@ public enum Token {
     }
 
     public static boolean isTermOperator(Token t) {
-    	System.out.print("isTermOperator token: " + t);
-    	if(t == addToken || t == addToken){
+    	//System.out.print("isTermOperator token: " + t);
+    	if(t == addToken || t == subtractToken){
     		return true;
     	} else {
     		return false;
@@ -45,7 +45,7 @@ public enum Token {
     }
 
     public static boolean isRelOperator(Token t) {
-    	System.out.println("isRelOperator token: " + t);
+    	//System.out.println("isRelOperator token: " + t);
     	switch(t){
     	case greaterEqualToken:
     	case greaterToken:
@@ -64,7 +64,7 @@ public enum Token {
     }
 
     public static boolean isOperand(Token t) {
-    	System.out.print("isOperand token: " + t);
+    	//System.out.print("isOperand token: " + t);
     	switch(t){
     	case numberToken:
     	case nameToken:
@@ -76,7 +76,7 @@ public enum Token {
     }
 
     public static boolean isTypeName(Token t) {
-    	System.out.print("isTypeName token: " + t);
+    	//System.out.print("isTypeName token: " + t);
     	
     	if(t == intToken || t == doubleToken){
     		return true;
