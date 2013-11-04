@@ -33,6 +33,24 @@ public class Types {
 		}
 	    };
 	//-- Must be changed in part 2:
+    
+
+    intType = new BasicType() {
+		@Override public int size() {
+		    return 4;
+		}
+
+		@Override public String typeName() {
+		    return "int";
+		}
+
+		@Override public void genJumpIfZero(String jumpLabel) {
+		    // Code.genInstr("", "fstps", Code.tmpLabel, "");
+		    // Code.genInstr("", "cmpl", "$0,"+Code.tmpLabel, "");
+		    // Code.genInstr("", "je", jumpLabel, "");
+		}
+	    };
+	//-- Must be changed in part 2:
     }
 
     public static void finish() {

@@ -32,7 +32,8 @@ public class Syntax {
 
     public static void finish() {
 	//TODO:-- Must be changed in part 1:
-    program.printTree();
+    System.out.println("finish");
+    //program.printTree();
     }
 
     public static void checkProgram() {
@@ -48,7 +49,9 @@ public class Syntax {
     }
 
     public static void printProgram() {
+    System.out.println("\nPrinting Program");
 	program.printTree();
+    System.out.println("Done Printing Program");
     }
 
     static void error(SyntaxUnit use, String message) {
@@ -107,6 +110,7 @@ class Program extends SyntaxUnit {
     }
 
     @Override void printTree() {
+    System.out.println("Program.printTree");
 	progDecls.printTree();
     }
 }
@@ -138,10 +142,16 @@ abstract class DeclList extends SyntaxUnit {
 
     @Override void printTree() {
 	//TODO:-- Must be changed in part 1:
+        System.out.println("Declaration.printTree");
         Declaration curDecl = firstDecl;
+        if (curDecl == null) {
+            System.out.println("DeclList is empty, return from printTree()");
+            return;
+        }
+        curDecl.printTree();
         while(curDecl.nextDecl != null){
-            curDecl.printTree();
             curDecl = curDecl.nextDecl;
+            curDecl.printTree();
         }
     }
 
@@ -209,8 +219,22 @@ class LocalDeclList extends DeclList {
 
     static LocalDeclList parse() {
 	//TODO:-- Must be changed in part 1:
-
-	return null;
+    LocalDeclList ldl = new LocalDeclList();
+    ldl.outerScope = ldl;
+    while (Token.isTypeName(Scanner.curToken)) {
+       if (Scanner.nextToken == nameToken) {
+           if (Scanner.nextNextToken == leftBracketToken) {
+               ldl.addDecl(LocalArrayDecl.parse());
+           } else {
+            //TODO:-- Must be changed in part 1:
+               ldl.addDecl(LocalSimpleVarDecl.parse());
+           }
+        } else {
+        Error.expected("A declaration");
+        }
+    }
+    return ldl;
+    
     }
 }
 
@@ -249,10 +273,16 @@ class ParamDeclList extends DeclList {
 
     @Override void printTree() {
     //-- Must be changed in part 1:
+        System.out.println("ParamDeclList.printTree");
         ParamDecl curParamDecl = firstDecl;
+        if (firstDecl == null) {
+            System.out.println("ParamDeclList is Empty, return from printTree");
+            return;
+        }
+        curParamDecl.printTree();
         while(curParamDecl.nextDecl != null){
-            curParamDecl.printTree();
             curParamDecl = curParamDecl.nextDecl;
+            curParamDecl.printTree();
         }
     }
 }
@@ -338,6 +368,7 @@ abstract class VarDecl extends Declaration {
 	
     
     @Override void printTree() {
+    System.out.println("VarDecl.printTree");
 	Log.wTree(type.typeName() + " " + name);
 	Log.wTreeLn(";");
     }
@@ -381,6 +412,7 @@ class GlobalArrayDecl extends VarDecl {
     }
 
     @Override void printTree() {
+    System.out.println("GlobalArrayDecl.printTree");
 	//TODO:-- Must be changed in part 1:
     }
 }
@@ -452,6 +484,7 @@ class LocalArrayDecl extends VarDecl {
     }
 
     @Override void printTree() {
+        System.out.println("LocalArrayDecl.printTree");
 	//TODO:-- Must be changed in part 1:
     }
 
@@ -530,6 +563,10 @@ class ParamDecl extends VarDecl {
 	
 	return paramDecl;
     }
+
+    // @Override void printTree(){
+    //     System.out.println("lOL");
+    // }
 }
 
 
@@ -594,12 +631,18 @@ class FuncDecl extends Declaration {
 
     @Override void printTree() {
 	//TODO:-- Must be changed in part 1:
-        Log.wTree(type.typeName()); 
-        Log.wTree(name);
-        Log.wTree("(");
+        System.out.println("FuncDecl.printTree");
+        Log.wTree(type.typeName());
+        System.out.println("1");
+        Log.wTree(" " + name);
+        System.out.println("2");
+        Log.wTree(" (");
+        System.out.println("before paraDeclList.printTree call");
         paraDeclList.printTree();
-        Log.wTree(")");
+        Log.wTreeLn(")");
         funcBody.printTree();
+
+        System.out.println("FuncDecl.printTree : Done");
     }
 }
 
@@ -623,7 +666,7 @@ class FuncBody extends SyntaxUnit {
     FuncBody funcBody = new FuncBody();
     Scanner.skip(leftCurlToken);
     System.out.println("curToken before localDeclList: " + Scanner.curToken);
-    //funcBody.localDeclList = LocalDeclList.parse();
+    funcBody.localDeclList = LocalDeclList.parse();
     System.out.println("curToken before statmList: " + Scanner.curToken);
     funcBody.statmList = StatmList.parse();
     System.out.println("curToken: " + Scanner.curToken);
@@ -634,12 +677,16 @@ class FuncBody extends SyntaxUnit {
 
     @Override void printTree() {
     //TODO:-- Must be changed in part 1:
+    System.out.println("FuncBody.printTree");
     Log.wTreeLn("{");
     Log.indentTree();
+    System.out.println("LOL 1 ");
     localDeclList.printTree();
+    System.out.println("LOL 2 ");
     statmList.printTree();
     Log.outdentTree();
     Log.wTreeLn("}");
+    System.out.println("Done with FuncBody.printTree");
     }
 }
 
@@ -678,11 +725,16 @@ class StatmList extends SyntaxUnit {
     }
 
     @Override void printTree() {
+    System.out.println("StatmList.printTree");
 	//-- Must be changed in part 1:
     Statement curStatm = firstStatm;
+    if (curStatm == null) {
+        System.out.println("StatmList is empty, return from printTree");
+    }
+    curStatm.printTree();
     while(curStatm.nextStatm != null){
-        curStatm.printTree();
         curStatm = curStatm.nextStatm;
+        curStatm.printTree();
     }
     }
 }
@@ -753,6 +805,7 @@ class AssignStatm extends Statement{
 
 	@Override
 	void printTree(){
+        System.out.println("AssignStatm.printTree");
 		// TODO Auto-generated method stub
         a.printTree(); Log.wTreeLn(";");
 	}
@@ -786,6 +839,7 @@ class CallStatm extends Statement{
 	
 	@Override
 	void printTree(){
+        System.out.println("CallStatm.printTree");
 		// TODO Auto-generated method stub
         fc.printTree();
         Log.wTreeLn(";");
@@ -816,6 +870,7 @@ class EmptyStatm extends Statement {
     }
 
     @Override void printTree() {
+    System.out.println("EmptyStatm.printTree");
 	//TODO:-- Must be changed in part 1:
     }
 }
@@ -856,6 +911,7 @@ class ForStatm extends Statement {
 
 	@Override
 	void printTree(){
+        System.out.println("ForStatm.printTree");
 		// TODO Auto-generated method stub
 		Log.wTree("for ("); fc.printTree(); Log.wTreeLn(") {");
 		Log.indentTree();
@@ -900,7 +956,7 @@ class ForControl extends Statement{
 	
 	@Override
 	void printTree(){
-	
+	   System.out.println("ForControl.printTree");
 		as.printTree(); Log.wTree(";"); e.printTree(); Log.wTree(";"); as2.printTree();
 		
 	}
@@ -948,6 +1004,7 @@ class IfStatm extends Statement {
     }
 
     @Override void printTree() {
+        System.out.println("IfStatm.printTree");
 	//TODO:-- Must be changed in part 1:
     	Log.wTree("if (");  e.printTree();  Log.wTreeLn(") {");
     	Log.indentTree();
@@ -990,6 +1047,7 @@ class ElsePart extends Statement{
 	
 	@Override
 	void printTree(){
+        System.out.println("ElsePart.printTree");
 		// TODO Auto-generated method stub
 		Log.wTree("else { ");
 		Log.indentTree();
@@ -1030,7 +1088,7 @@ class ReturnStatm extends Statement {
 	
 	@Override
 	void printTree() {
-		
+		System.out.println("ReturnStatm.printTree");
 		Log.wTree("return ");
 		retVal.printTree();
 		Log.wTree(";");
@@ -1078,6 +1136,7 @@ class WhileStatm extends Statement {
     }
 
     @Override void printTree() {
+    System.out.println("WhileStatm.printTree");
 	Log.wTree("while (");  test.printTree();  Log.wTreeLn(") {");
 	Log.indentTree();
 	body.printTree();
@@ -1135,11 +1194,17 @@ class ExprList extends SyntaxUnit {
     }
 
     @Override void printTree() {
+        System.out.println("ExprList.printTree");
 	//TODO:-- Must be changed in part 1:
         Expression curExpre = firstExpr;
+        if (curExpre == null) {
+            System.out.println("ExprList is empty, returning from printTree");
+            return;
+        }
+        curExpre.printTree();
         while(curExpre.nextExpr != null){
-            curExpre.printTree();
             curExpre = curExpre.nextExpr;
+            curExpre.printTree();
         }
     }
     //TODO:-- Must be changed in part 1:
@@ -1181,6 +1246,7 @@ class Assignment extends SyntaxUnit {
     }
 
     @Override void printTree() {
+        System.out.println("Assignment.printTree");
         variable.printTree();  Log.wTree("=");  exp.printTree();
     }
 }
@@ -1218,6 +1284,15 @@ class Expression extends Operand {
     }
 
     @Override void printTree() {
+        System.out.println("Expression.printTree");
+        firstTerm.printTree();
+        System.out.println("omg");
+        if (relOp != null) {
+            relOp.printTree();
+        }
+        if (secondTerm != null) {
+            secondTerm.printTree();
+        }
 	//TODO:-- Must be changed in part 1:
     }
 }
@@ -1294,6 +1369,7 @@ class Factor extends SyntaxUnit {
 
 	@Override
 	void printTree(){
+        System.out.println("Factor.printTree");
 		// TODO Auto-generated method stub
 		op.printTree();
 		
@@ -1329,6 +1405,7 @@ class Term extends SyntaxUnit {
     }
 
     @Override void printTree() {
+        System.out.println("Term.printTree");
     	f.printTree();
     	//-- Must be changed in part 1+2:
     }
@@ -1396,6 +1473,7 @@ class RelOperator extends Operator {
     }
 
     @Override void printTree() {
+    System.out.println("RelOperator.printTree");
 	String op = "?";
 	switch (opToken) {
 		case equalToken:        op = "==";  break;
@@ -1511,11 +1589,12 @@ class FunctionCall extends Operand {
     }
 
     @Override void printTree() {
+        System.out.println("FunctionCall.printTree");
 	//TODO:-- Must be changed in part 1:
         Log.wTree(name); 
         Log.wTree("("); 
         expList.printTree();
-        Log.wTreeLn(")");
+        Log.wTree(")");
     }
     //TODO:-- Must be changed in part 1+2:
 }
@@ -1546,6 +1625,7 @@ class Number extends Operand {
     }
 
      @Override void printTree() {
+    System.out.println("Number.printTree");
 	Log.wTree("" + numVal);
     }
 }
@@ -1636,6 +1716,7 @@ class Variable extends Operand {
     }
 
     @Override void printTree() {
+        System.out.println("Variable.printTree");
 	//TODO:-- Must be changed in part 1:
     }
 }
