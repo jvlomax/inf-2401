@@ -33,7 +33,6 @@ public class Syntax {
     public static void finish() {
 	//TODO:-- Must be changed in part 1:
     System.out.println("finish");
-    //program.printTree();
     }
 
     public static void checkProgram() {
@@ -1378,7 +1377,7 @@ class Factor extends SyntaxUnit {
  */
 class Term extends SyntaxUnit {
     //TODO:-- Must be changed in part 1+2:
-	Factor f;
+    FactorList fl;
 	
 	
     @Override void check(DeclList curDecls) {
@@ -1393,7 +1392,7 @@ class Term extends SyntaxUnit {
 	//TODO:-- Must be changed in part 1:̈́
     	Log.enterParser("<term>");
     	Term t = new Term();
-    	t.f = Factor.parse();
+    	t.fl = FactorList.parse();
     	Log.leaveParser("</term>");
     	
     	
