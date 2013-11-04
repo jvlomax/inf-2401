@@ -1222,8 +1222,52 @@ class Expression extends Operand {
     }
 }
 
+class FactorList extends SyntaxUnit {
+	Factor firstFactor;
+	@Override
+	void check(DeclList curDecls){
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void genCode(FuncDecl curFunc){
+		// TODO Auto-generated method stub
+		
+	}
+	
+	static FactorList parse(){
+		FactorList fl = new FactorList();
+		Factor lastFactor = null;
+		while(Token.isFactorOperator(Scanner.nextToken)){
+			if(fl.firstFactor == null){
+				lastFactor = fl.firstFactor = Factor.parse();
+			}else{
+				lastFactor = lastFactor.nextFactor = Factor.parse();
+			}
+			Scanner.readNext();
+			Scanner.readNext();
+		}
+		
+		
+		return null;
+	}
+
+	@Override
+	void printTree(){
+		
+		
+	}
+	
+	
+	
+}
+
 class Factor extends SyntaxUnit {
+	
+	Factor nextFactor = null;
 	Operand op;
+		
 	@Override
 	void check(DeclList curDecls){
 		// TODO Auto-generated method stub
@@ -1238,7 +1282,7 @@ class Factor extends SyntaxUnit {
 	static Factor parse(){
 		Log.enterParser("<factor>");
 		Factor f = new Factor();
-		f.op = Operand.parse();
+		f.op = Operand.parse();	
 		Log.leaveParser("</factor>");
 		return f;
 			
