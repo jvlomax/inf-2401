@@ -228,7 +228,7 @@ class ParamDeclList extends DeclList {
     static ParamDeclList parse() {
 	    //TODO:-- Must be changed in part 1:
         ParamDeclList paraDeclList = new ParamDeclList();
-        Log.enterParser("<paramDecl list>");
+        //Log.enterParser("<paramDecl list>");
 
     
         ParamDecl lastParamDecl = null;
@@ -243,7 +243,7 @@ class ParamDeclList extends DeclList {
         }
     }
 
-        Log.leaveParser("</paramDecl list>");
+        //Log.leaveParser("</paramDecl list>");
 	    return paraDeclList;
     }
 
@@ -539,8 +539,6 @@ class ParamDecl extends VarDecl {
  */
 class FuncDecl extends Declaration {
     //TODO:-- Must be changed in part 1+2:
-	Type type = null;
-	Name name = null;
 	ParamDeclList paraDeclList = null;
     FuncBody funcBody = null;
     FuncDecl(String n) {
@@ -1414,7 +1412,7 @@ class FunctionCall extends Operand {
 
     static FunctionCall parse() {    	
 	//TODO:-- Must be changed in part 1:
-    	Log.enterParser("<Function call>");
+    	Log.enterParser("<function call>");
         FunctionCall fc = new FunctionCall();
         System.out.println("CurToken Inside FunctionCall: " + Scanner.curToken + "name: " + Scanner.curName);
         fc.name = Name.parse();
@@ -1482,10 +1480,10 @@ class Name extends Operand {
     static Name parse() {
     //TODO:-- Must be changed in part 1:
         Name name = new Name();
-        Log.enterParser("<name>");
+        //Log.enterParser("<name>");
         name.nameVal = Scanner.curName;
         Scanner.readNext();
-        Log.leaveParser("</name>");
+        //Log.leaveParser("</name>");
     return name;
     }
 

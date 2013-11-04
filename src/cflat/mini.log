@@ -1,63 +1,34 @@
-1: # Program 'mini'  
-2: # -------------
-3: # A minimal Cb program!
-4: /* one line comment */
-5: int main ()  
-<<<<<<< HEAD
-Parser: 	<program>
-Parser: 		<func decl>
-Parser: 			<name>
-=======
-Parser: <program>
-Parser: <func decl>
-Parser: <name>
->>>>>>> branch 'master' of https://github.com/jvlomax/inf-2401.git
-6: {  
-<<<<<<< HEAD
-Parser: 		</name>
-=======
-Parser: </name>
->>>>>>> branch 'master' of https://github.com/jvlomax/inf-2401.git
-7:     putchar('x');  
-<<<<<<< HEAD
-Parser: 			<paramDecl list>
-Parser: 		</paramDecl list>
-Parser: 			<func body>
-Parser: 				<statm list>
-Parser: 					<statement>
-Parser: 						<call-statm>
-Parser: 							<Function call>
-Parser: 								<name>
-Parser: 							</name>
-Cb error in line 7: A rightParToken expected, but found a leftParToken!
-=======
-Parser: <paramDecl list>
-Parser: </paramDecl list>
-Parser: <func body>
-Parser: <statm list>
-Parser: <statement>
-Parser: <call-statm>
-Parser: <Function call>
-Parser: <name>
-Parser: </name>
-Parser: <expr list>
-Parser: <expression>
-Parser: <term>
-Parser: <factor>
-Parser: <operand>
-Parser: <number>
-8: }  
-Parser: </number>
-Parser: </operand>
-Parser: </factor>
-Parser: </term>
-Parser: </expression>
-Parser: </expr list>
-Parser: </function call>
-Parser: </call-statm>
-Parser: </statement>
-Parser: </statm list>
-Parser: </func body>
-Parser: </func decl>
-Parser: </program>
->>>>>>> branch 'master' of https://github.com/jvlomax/inf-2401.git
+   1: # Program 'mini'
+   2: # -------------
+   3: # A minimal Cb program!
+   4: /* one line comment */
+   5: int main ()
+Parser:   <program>
+Parser:     <func decl>
+   6: {
+   7:     putchar('x');
+Parser:       <func body>
+Parser:         <statm list>
+Parser:           <statement>
+Parser:             <call-statm>
+Parser:               <function call>
+Parser:                 <expr list>
+Parser:                   <expression>
+Parser:                     <term>
+Parser:                       <factor>
+Parser:                         <operand>
+Parser:                           <number>
+   8: }
+Parser:                           </number>
+Parser:                         </operand>
+Parser:                       </factor>
+Parser:                     </term>
+Parser:                   </expression>
+Parser:                 </expr list>
+Parser:               </function call>
+Parser:             </call-statm>
+Parser:           </statement>
+Parser:         </statm list>
+Parser:       </func body>
+Parser:     </func decl>
+Parser:   </program>

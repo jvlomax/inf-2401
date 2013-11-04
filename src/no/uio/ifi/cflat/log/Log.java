@@ -68,11 +68,11 @@ public class Log {
 
     public static void leaveParser(String symbol) {
 	if (! doLogParser) return;
-		Log.parseLevel --;
 		char[] tabs = new char[Log.parseLevel * 2];
 		Arrays.fill(tabs, ' ');
 		String tabsString = new String(tabs);
 		Log.writeLogLine("Parser: " + tabsString +  symbol);
+		Log.parseLevel --;
 	
     }
 
