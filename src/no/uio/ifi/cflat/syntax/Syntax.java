@@ -1313,7 +1313,7 @@ class FactorList extends SyntaxUnit {
 	static FactorList parse(){
 		FactorList fl = new FactorList();
 		Factor lastFactor = null;
-		while(Token.isFactorOperator(Scanner.nextToken)){
+		while(Token.isTermOperator(Scanner.nextToken)){
 			if(fl.firstFactor == null){
 				lastFactor = fl.firstFactor = Factor.parse();
 			}else{
@@ -1324,12 +1324,16 @@ class FactorList extends SyntaxUnit {
 		}
 		
 		
-		return null;
+		return fl;
 	}
 
 	@Override
 	void printTree(){
-		
+		firstFactor.printTree();
+		while (firstFactor.nextFactor != null){
+			firstFactor.nextFactor.printTree();
+			firstFactor.nextFactor = firstFactor.nextFactor.nextFactor;
+		}
 		
 	}
 	
@@ -1482,6 +1486,44 @@ class RelOperator extends Operator {
     }
 }
 
+
+class OperandList extends SyntaxUnit{
+	Operand firstOperand;
+	@Override
+	void check(DeclList curDecls){
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void genCode(FuncDecl curFunc){
+		// TODO Auto-generated method stub
+		
+	}
+
+	static OperandList parse(){
+		OperandList opl = new OperandList();
+		Operand lastOperand = null;
+		while(Token.isFactorOperator(Scanner.nextToken)){
+			if(opl.firstOperand == null){
+				lastOperand = opl.firstOperand = Operand.parse();
+			}else{
+				lastOperand = lastOperand.nextOperand = Operand.parse();
+			}
+			Scanner.readNext();
+			Scanner.readNext();
+		}
+		return null;
+	}
+	@Override
+	void printTree(){
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+}
 
 /*
  * An <operand>
